@@ -88,8 +88,10 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
             display: flex;
             justify-content: center;
@@ -97,6 +99,15 @@
             z-index: 10000;
             padding: 20px;
             transition: var(--transition);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-height: 640px) or (max-width: 480px) {
+            .login-overlay {
+                align-items: flex-start;
+                padding: 30px 15px;
+            }
         }
         
         .login-overlay.hidden {
@@ -271,6 +282,10 @@
             display: flex;
             min-height: 100vh;
             flex-direction: column;
+        }
+
+        .app-container.hidden-layout {
+            display: none !important;
         }
 
         /* HEADER SECTION */
@@ -1570,11 +1585,17 @@
                 <i data-lucide="eye" style="display:inline-block; width:16px; height:16px; vertical-align:middle; margin-right:4px;"></i> 
                 Acceder como Invitado (Público)
             </button>
+            
+            <!-- PWA INSTALL APP BUTTON FOR LOGIN SCREEN -->
+            <button id="btnInstallPwaLogin" style="display: none; width: 100%; padding: 12px; background: var(--warning); color: var(--warning-dark); border: none; border-radius: var(--radius-md); font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-top: 15px; align-items: center; justify-content: center; gap: 8px; animation: pulse 2s infinite; box-shadow: var(--shadow-sm);">
+                <i data-lucide="download" style="width: 16px; height: 16px;"></i>
+                Instalar Aplicación en el Celular
+            </button>
         </div>
     </div>
 
     <!-- MAIN APP CONTAINER -->
-    <div class="app-container">
+    <div class="app-container hidden-layout">
         
         <!-- HEADER -->
         <header class="app-header">
@@ -2588,9 +2609,11 @@
                 currentUser = JSON.parse(sessionUser);
                 applyUserRoleUI();
                 document.getElementById('loginOverlay').classList.add('hidden');
+                document.querySelector('.app-container').classList.remove('hidden-layout');
             } else {
                 // If not logged in, keep login Overlay visible
                 document.getElementById('loginOverlay').classList.remove('hidden');
+                document.querySelector('.app-container').classList.add('hidden-layout');
             }
 
             populateFilters();
@@ -2650,8 +2673,9 @@
                 }
                 applyUserRoleUI();
                 
-                // Hide login overlay
+                // Hide login overlay & show app container
                 document.getElementById('loginOverlay').classList.add('hidden');
+                document.querySelector('.app-container').classList.remove('hidden-layout');
                 document.getElementById('loginAlert').style.display = 'none';
                 
                 // Clear login form
@@ -2683,6 +2707,7 @@
             localStorage.removeItem('currentUser');
             applyUserRoleUI();
             document.getElementById('loginOverlay').classList.add('hidden');
+            document.querySelector('.app-container').classList.remove('hidden-layout');
         }
 
         function logout() {
@@ -2691,6 +2716,7 @@
             localStorage.removeItem('currentUser');
             applyUserRoleUI();
             document.getElementById('loginOverlay').classList.remove('hidden');
+            document.querySelector('.app-container').classList.add('hidden-layout');
         }
 
         function applyUserRoleUI() {
@@ -4270,29 +4296,44 @@
             e.preventDefault();
             deferredPrompt = e;
             const installBtn = document.getElementById('btnInstallPwa');
+            const installBtnLogin = document.getElementById('btnInstallPwaLogin');
+            
+            const handleInstallClick = () => {
+                if (!deferredPrompt) return;
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('El usuario aceptó la instalación.');
+                    } else {
+                        console.log('El usuario rechazó la instalación.');
+                    }
+                    deferredPrompt = null;
+                    if (installBtn) installBtn.style.display = 'none';
+                    if (installBtnLogin) installBtnLogin.style.display = 'none';
+                });
+            };
+
             if (installBtn) {
                 installBtn.style.display = 'inline-flex';
-                installBtn.addEventListener('click', () => {
-                    deferredPrompt.prompt();
-                    deferredPrompt.userChoice.then((choiceResult) => {
-                        if (choiceResult.outcome === 'accepted') {
-                            console.log('El usuario aceptó la instalación.');
-                        } else {
-                            console.log('El usuario rechazó la instalación.');
-                        }
-                        deferredPrompt = null;
-                        installBtn.style.display = 'none';
-                    });
-                });
+                installBtn.onclick = handleInstallClick;
+            }
+            if (installBtnLogin) {
+                installBtnLogin.style.display = 'inline-flex';
+                installBtnLogin.onclick = handleInstallClick;
+            }
+
+            // Re-run lucide to make sure icons are rendered in both buttons
+            if (typeof lucide !== 'undefined' && lucide.createIcons) {
+                lucide.createIcons();
             }
         });
 
         window.addEventListener('appinstalled', (evt) => {
             console.log('App instalada con éxito.');
             const installBtn = document.getElementById('btnInstallPwa');
-            if (installBtn) {
-                installBtn.style.display = 'none';
-            }
+            const installBtnLogin = document.getElementById('btnInstallPwaLogin');
+            if (installBtn) installBtn.style.display = 'none';
+            if (installBtnLogin) installBtnLogin.style.display = 'none';
         });
     </script>
     
