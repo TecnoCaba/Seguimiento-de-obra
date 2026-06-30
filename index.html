@@ -608,11 +608,13 @@
             box-shadow: var(--shadow-sm);
             overflow-x: auto;
             margin-bottom: 25px;
+            -webkit-overflow-scrolling: touch;
         }
 
         table.req-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
             text-align: left;
             font-size: 0.9rem;
         }
@@ -635,6 +637,21 @@
             vertical-align: middle;
         }
 
+        /* Sticky first column */
+        table.req-table th:first-child,
+        table.req-table td:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 10;
+            background-color: var(--bg-card);
+            border-right: 2px solid var(--border-light);
+        }
+
+        table.req-table th:first-child {
+            background-color: #f8fafc;
+            z-index: 11;
+        }
+
         table.req-table tbody tr {
             transition: var(--transition);
         }
@@ -642,6 +659,11 @@
         table.req-table tbody tr:hover {
             background-color: #f1f5f9;
             cursor: pointer;
+        }
+
+        /* Ensure sticky cell inherits hover color */
+        table.req-table tbody tr:hover td:first-child {
+            background-color: #f1f5f9;
         }
 
         .req-title-cell {
@@ -660,6 +682,8 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            min-width: 165px;
+            max-width: 240px;
         }
 
         /* BADGES */
@@ -2953,12 +2977,11 @@
                 tr.onclick = () => showDetailModal(r.id);
                 
                 // Set custom color indicators for locked or critical elements
+                let leftBorderColor = 'transparent';
                 if (r.Estado === 'Bloqueado') {
-                    tr.style.borderLeft = '4px solid var(--danger)';
+                    leftBorderColor = 'var(--danger)';
                 } else if (r.Prioridad === 'P3 - MUY URGENTE') {
-                    tr.style.borderLeft = '4px solid var(--warning)';
-                } else {
-                    tr.style.borderLeft = '4px solid transparent';
+                    leftBorderColor = 'var(--warning)';
                 }
 
                 // Title details
@@ -3001,7 +3024,7 @@
                 const seguimiento = r.SEGUIMIENTO || '<span style="color:var(--text-muted);">Sin asignar</span>';
 
                 tr.innerHTML = `
-                    <td>${titleCell}</td>
+                    <td style="border-left: 4px solid ${leftBorderColor};">${titleCell}</td>
                     <td style="font-weight: 700;">${formatCurrency(r.MONTO)}</td>
                     <td>${prioBadge}</td>
                     <td>${stateBadge}</td>
