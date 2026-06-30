@@ -1,6 +1,7 @@
 const CACHE_NAME = 'req-tracker-cache-v1';
 const ASSETS = [
   './index.html',
+  './users_config.js',
   './initial_data.js',
   './requerimientos.json',
   './manifest.json',
