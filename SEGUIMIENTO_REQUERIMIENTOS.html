@@ -1152,6 +1152,97 @@
             .timeline-track {
                 display: none;
             }
+
+            /* Table responsive stacked layout (card layout for requirements) */
+            .table-container {
+                background: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                overflow-x: visible !important;
+                margin-bottom: 15px;
+            }
+
+            table.req-table, 
+            table.req-table thead, 
+            table.req-table tbody, 
+            table.req-table tr, 
+            table.req-table th, 
+            table.req-table td {
+                display: block !important;
+                width: 100% !important;
+            }
+
+            table.req-table thead {
+                display: none !important; /* Hide header rows on mobile cards */
+            }
+
+            table.req-table tbody tr {
+                background-color: var(--bg-card) !important;
+                border: 1px solid var(--border-light) !important;
+                border-radius: var(--radius-md) !important;
+                margin-bottom: 15px !important;
+                padding: 15px !important;
+                box-shadow: var(--shadow-sm) !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 8px !important;
+                position: relative !important;
+                box-sizing: border-box !important;
+            }
+
+            table.req-table tbody tr:hover {
+                transform: translateY(-2px) !important;
+                box-shadow: var(--shadow-md) !important;
+            }
+
+            /* Sticky first column disable on mobile stacked */
+            table.req-table th:first-child,
+            table.req-table td:first-child {
+                position: static !important;
+                background-color: transparent !important;
+                border-right: none !important;
+                padding: 0 0 8px 10px !important; /* Leave space for left border indicator */
+                margin-bottom: 8px !important;
+                border-bottom: 1px solid var(--border-light) !important;
+                z-index: auto !important;
+                display: block !important;
+            }
+
+            table.req-table tbody tr:hover td:first-child {
+                background-color: transparent !important;
+            }
+
+            table.req-table td {
+                padding: 4px 0 !important;
+                border-bottom: none !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                font-size: 0.85rem !important;
+                vertical-align: middle !important;
+                box-sizing: border-box !important;
+                white-space: normal !important; /* Allow wrapping on card detail lines if long */
+            }
+
+            /* Dynamic labels for stacked table columns */
+            table.req-table td:nth-child(2)::before { content: "Monto:"; font-weight: 700; color: var(--text-muted); }
+            table.req-table td:nth-child(3)::before { content: "Prioridad:"; font-weight: 700; color: var(--text-muted); }
+            table.req-table td:nth-child(4)::before { content: "Estado:"; font-weight: 700; color: var(--text-muted); }
+            table.req-table td:nth-child(5)::before { content: "Ruta / Procedimiento:"; font-weight: 700; color: var(--text-muted); }
+            table.req-table td:nth-child(6)::before { content: "Paso Actual:"; font-weight: 700; color: var(--text-muted); }
+            table.req-table td:nth-child(7)::before { content: "Oficina Actual:"; font-weight: 700; color: var(--text-muted); }
+            table.req-table td:nth-child(8)::before { content: "Seguimiento:"; font-weight: 700; color: var(--text-muted); }
+            table.req-table td:nth-child(9)::before { content: "Acción:"; font-weight: 700; color: var(--text-muted); }
+
+            table.req-table td:nth-child(2) { font-weight: 700 !important; }
+            table.req-table td:nth-child(7) { font-weight: 600 !important; color: var(--primary-light) !important; }
+            table.req-table td:nth-child(8) { font-weight: bold !important; }
+            table.req-table td:nth-child(9) { text-align: right !important; justify-content: flex-end !important; }
+
+            .req-title-cell-wrap {
+                max-width: 100% !important;
+                font-size: 0.95rem !important;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1761,9 +1852,9 @@
             <!-- TABS BAR -->
             <div class="app-tabs">
                 <button class="tab-btn active" onclick="switchTab('tab-dashboard')">📊 Panel Principal</button>
-                <button class="tab-btn" onclick="switchTab('tab-normativa')">📋 Validador Normativo</button>
-                <button class="tab-btn" onclick="switchTab('tab-diagrama')">🗺️ Diagrama Normativo</button>
-                <button class="tab-btn" onclick="switchTab('tab-ayuda')">📄 Casos Reales</button>
+                <button class="tab-btn" onclick="switchTab('tab-normativa')">📋 Validar Requerimiento</button>
+                <button class="tab-btn" onclick="switchTab('tab-diagrama')">🗺️ Diagrama de Gestión de Req</button>
+                <button class="tab-btn" onclick="switchTab('tab-ayuda')">📄 Caso Real</button>
             </div>
 
             <!-- TAB 1: DASHBOARD AND DATA -->
@@ -2231,11 +2322,6 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                </div>
-            </div>a en la <strong>Bitácora de Comentarios</strong> para mantener el historial.</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
