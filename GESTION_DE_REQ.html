@@ -291,49 +291,49 @@
                         graph TD
                         
                         %% Node Definitions
-                        A("INICIO: Necesidad de Bien o Servicio")
-                        B{"¿Está en Presupuesto <br>Analítico Exp. Mod 03?"}
+                        A["INICIO: Necesidad de Bien o Servicio"]
+                        B["Esta en Presupuesto Analitico Exp. Mod 03"]
                         C["RECHAZO ABSOLUTO"]
                         D["Programar mediante ANEXO N. 03"]
-                        E{"¿El bien cuenta con Ficha OSCE<br>o Catálogo PERÚ COMPRAS?"}
-                        F{"¿Monto Referencial es <br> MAYOR a S/ 1,000?"}
-                        G["ADQUISICIÓN OBLIGATORIA POR PERÚ COMPRAS<br>Independientemente de si es menor o mayor a 8 UIT"]
-                        H["Proceso Regular<br>Monto menor o igual a S/ 1,000 NO ingresa a Perú Compras"]
+                        E["El bien cuenta con Ficha OSCE o Catalogo PERU COMPRAS"]
+                        F["Monto Referencial es MAYOR a S/ 1000"]
+                        G["ADQUISICION OBLIGATORIA POR PERU COMPRAS"]
+                        H["Proceso Regular - Monto menor o igual a S/ 1000"]
                         I["Adecuar Requerimiento a Ficha Oficial"]
-                        J{"¿Varía Nombre o Unidad <br>respecto al Analítico?"}
-                        K["Elaborar INFORME TÉCNICO <br>justificando adecuación"]
-                        L["Aprobación con MEMORÁNDUM"]
-                        M{"¿La cantidad en obra implica <br>metrado mayor?"}
-                        N["Elaborar ANEXO 10 de justificación"]
-                        O["Aprobación mediante ACTO RESOLUTIVO"]
+                        J["Varia Nombre o Unidad respecto al Analitico"]
+                        K["Elaborar INFORME TECNICO justificando adecuacion"]
+                        L["Aprobacion con MEMORANDUM"]
+                        M["La cantidad en obra implica metrado mayor"]
+                        N["Elaborar ANEXO 10 de justificacion"]
+                        O["Aprobacion mediante ACTO RESOLUTIVO"]
                         P["Elaborar Requerimiento Final: EETT / TDR"]
-                        Q{"¿EETT/TDR coinciden 100% en<br>Denom/Unid/Cant con Anexos aprobados?"}
-                        R["RECHAZO: No procede trámite"]
-                        S["REQUERIMIENTO VALIDADO Y APTO PARA TRÁMITE"]
+                        Q["Coinciden EETT y TDR con Anexos aprobados"]
+                        R["RECHAZO: No procede tramite"]
+                        S["REQUERIMIENTO VALIDADO Y APTO PARA TRAMITE"]
 
                         %% Connections
                         A --> B
                         B -->|NO| C
-                        B -->|SÍ| D
+                        B -->|SI| D
                         D --> E
-                        E -->|SÍ| F
+                        E -->|SI| F
                         E -->|NO| H
-                        F -->|SÍ| G
+                        F -->|SI| G
                         F -->|NO| H
                         G --> I
                         I --> J
                         H --> J
-                        J -->|SÍ| K
+                        J -->|SI| K
                         K --> L
                         L --> M
                         J -->|NO| M
-                        M -->|SÍ| N
+                        M -->|SI| N
                         N --> O
                         O --> P
                         M -->|NO| P
                         P --> Q
                         Q -->|NO| R
-                        Q -->|SÍ| S
+                        Q -->|SI| S
 
                         %% Style Classes Definitions
                         classDef reject fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#991b1b,font-weight:bold;
