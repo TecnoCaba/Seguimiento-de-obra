@@ -1807,7 +1807,7 @@
             </button>
 
             <div style="text-align: center; margin-top: 25px; font-size: 0.78rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.5px;">
-                Versión 1.0.6
+                Versión 1.0.7
             </div>
         </div>
     </div>
@@ -1822,7 +1822,7 @@
                     <i data-lucide="git-pull-request" style="width: 22px; height: 22px;"></i>
                 </div>
                 <div class="brand-text">
-                    <h1>GESTIÓN DE REQUERIMIENTOS <span style="font-size: 0.72rem; font-weight: 700; color: var(--warning-dark); background-color: var(--warning-light); padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 8px; border: 1px solid rgba(245, 158, 11, 0.2); display: inline-block;">v1.0.6</span></h1>
+                    <h1>GESTIÓN DE REQUERIMIENTOS <span style="font-size: 0.72rem; font-weight: 700; color: var(--warning-dark); background-color: var(--warning-light); padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 8px; border: 1px solid rgba(245, 158, 11, 0.2); display: inline-block;">v1.0.7</span></h1>
                     <p>Obra: Mejoramiento de los Servicios de Educación Superior del ISTP Cabanillas</p>
                 </div>
             </div>
@@ -2357,61 +2357,9 @@
                         <span id="modalRouteTitle">Bienes Menor a 8 UIT</span>
                     </div>
                     
-                    <div class="timeline-wrapper">
+                    <div class="timeline-wrapper" id="modalTimelineWrapper">
                         <div class="timeline-track">
                             <div class="timeline-track-fill" id="modalTimelineTrackFill"></div>
-                        </div>
-                        
-                        <!-- 10 Nodes dynamically populated -->
-                        <div class="timeline-node" data-step="1">
-                            <div class="timeline-circle">1</div>
-                            <div class="timeline-label">PROG</div>
-                            <div class="timeline-tooltip">Paso 1: Programación (Anexo 03)</div>
-                        </div>
-                        <div class="timeline-node" data-step="2">
-                            <div class="timeline-circle">2</div>
-                            <div class="timeline-label">ADMI</div>
-                            <div class="timeline-tooltip">Paso 2: Administración de Obra</div>
-                        </div>
-                        <div class="timeline-node" data-step="3">
-                            <div class="timeline-circle">3</div>
-                            <div class="timeline-label">J-COTI</div>
-                            <div class="timeline-tooltip">Paso 3: Cotizaciones (Ingreso/Asignación)</div>
-                        </div>
-                        <div class="timeline-node" data-step="4">
-                            <div class="timeline-circle">4</div>
-                            <div class="timeline-label">J-COTI</div>
-                            <div class="timeline-tooltip">Paso 4: Cotizaciones (Revisión Jefe)</div>
-                        </div>
-                        <div class="timeline-node" data-step="5">
-                            <div class="timeline-circle">5</div>
-                            <div class="timeline-label">COTI</div>
-                            <div class="timeline-tooltip">Paso 5: Cotizador (Estudio de Mercado)</div>
-                        </div>
-                        <div class="timeline-node" data-step="6">
-                            <div class="timeline-circle">6</div>
-                            <div class="timeline-label">COTI</div>
-                            <div class="timeline-tooltip">Paso 6: Cotizador (Cuadro Comparativo)</div>
-                        </div>
-                        <div class="timeline-node" data-step="7">
-                            <div class="timeline-circle">7</div>
-                            <div class="timeline-label">OASA</div>
-                            <div class="timeline-tooltip">Paso 7: Abastecimiento (Ingreso/Evaluación)</div>
-                        </div>
-                        <div class="timeline-node" data-step="8">
-                            <div class="timeline-circle">8</div>
-                            <div class="timeline-label">OASA</div>
-                            <div class="timeline-tooltip">Paso 8: Abastecimiento (Certificación Financiera)</div>
-                        </div>
-                        <div class="timeline-node" data-step="9">
-                            <div class="timeline-circle">9</div>
-                            <div class="timeline-label">OASA</div>
-                            <div class="timeline-tooltip">Paso 9: Abastecimiento (Orden de Compra)</div>
-                        </div>
-                        <div class="timeline-node" data-step="10">
-                            <div class="timeline-circle">10</div>
-                            <div class="timeline-label">OASA</div>
-                            <div class="timeline-tooltip">Paso 10: Trámite Concluido / Entrega</div>
                         </div>
                     </div>
                 </div>
@@ -2553,7 +2501,7 @@
 
                             <div class="form-group admin-only-field">
                                 <label for="editRuta">Ruta de Seguimiento</label>
-                                <select id="editRuta" class="form-control" onchange="updateFormTimelineNodes()">
+                                <select id="editRuta" class="form-control" onchange="handleEditRutaChange()">
                                     <option value="menor_8_uit">Bienes Menor a 8 UIT (≤ S/ 44,000)</option>
                                     <option value="peru_compras">Contratación por Catálogo Electrónico</option>
                                     <option value="seace">Bienes SEACE (Mayor a 8 UIT)</option>
@@ -2563,16 +2511,7 @@
                             <div class="form-group admin-only-field">
                                 <label for="editPasoActual">Paso Actual en Ruta (1 - 10)</label>
                                 <select id="editPasoActual" class="form-control" onchange="updateFormTimelineNodes()">
-                                    <option value="1">Paso 1: PROG (Programación)</option>
-                                    <option value="2">Paso 2: ADMI (Administración)</option>
-                                    <option value="3">Paso 3: J-COTI (Ingreso Cotización)</option>
-                                    <option value="4">Paso 4: J-COTI (Aprobación Cotización)</option>
-                                    <option value="5">Paso 5: COTI (Estudio de Mercado)</option>
-                                    <option value="6">Paso 6: COTI (Cuadro Comparativo)</option>
-                                    <option value="7">Paso 7: OASA (Revisión Abastecimiento)</option>
-                                    <option value="8">Paso 8: OASA (Certificación)</option>
-                                    <option value="9">Paso 9: OASA (Orden de Compra)</option>
-                                    <option value="10">Paso 10: OASA (Concluido / Entrega)</option>
+                                    <!-- Dynamic options populated in JS -->
                                 </select>
                             </div>
 
@@ -2728,6 +2667,40 @@
         // Pagination states
         let currentPage = 1;
         const rowsPerPage = 10;
+
+        // Custom workflow steps for each route
+        const ROUTE_STEPS = {
+            'menor_8_uit': [
+                { code: "PROG", desc: "APROBACIÓN DE REQUERIMIENTO" },
+                { code: "ADMI", desc: "REVISIÓN DE REQUERIMIENTO" },
+                { code: "J-COTI", desc: "REVISIÓN DE REQUERIMIENTO" },
+                { code: "J-COTI", desc: "GENERACIÓN DE COTIZACIÓN" },
+                { code: "J-COTI", desc: "RECEPCIÓN DE COTIZACIÓN" },
+                { code: "J-COTI", desc: "GENERACIÓN DE CUADRO COMPARATIVO" },
+                { code: "OASA", desc: "RECEPCIÓN DE CUADRO COMPARATIVO" },
+                { code: "OASA", desc: "CERTIFICACIÓN DE CUADRO COMPARATIVO" },
+                { code: "OASA", desc: "GENERACIÓN DE ORDEN" },
+                { code: "OASA", desc: "NOTIFICACIÓN DE ORDEN" }
+            ],
+            'peru_compras': [
+                { code: "PROG", desc: "APROBACIÓN DE REQUERIMIENTO" },
+                { code: "ADMI", desc: "REVISIÓN DE REQUERIMIENTO" },
+                { code: "OASA", desc: "GENERACIÓN DE ORDEN" },
+                { code: "OASA", desc: "NOTIFICACIÓN DE ORDEN" }
+            ],
+            'seace': [
+                { code: "PROG", desc: "APROBACIÓN DE REQUERIMIENTO" },
+                { code: "ADMI", desc: "REVISIÓN DE REQUERIMIENTO" },
+                { code: "ESTU", desc: "ESTUDIO DE MERCADO / INDAGACIÓN" },
+                { code: "APRO", desc: "APROBACIÓN DE EXPEDIENTE" },
+                { code: "INTE", desc: "INTEGRACIÓN DE BASES" },
+                { code: "DOCU", desc: "DOCUMENTO DE CONVOCATORIA" },
+                { code: "APRO", desc: "APROBACIÓN DE COMITÉ" },
+                { code: "SEAC", desc: "PUBLICACIÓN SEACE" },
+                { code: "BUEN", desc: "OTORGAMIENTO DE BUENA PRO" },
+                { code: "TRAM", desc: "TRÁMITE DE SUSCRIPCIÓN / ORDEN" }
+            ]
+        };
         let filteredRequirements = [];
 
         // Normative validation states
@@ -3215,13 +3188,14 @@
                 const routeBadge = `<span class="badge ${routeClass}">${routeText}</span>`;
 
                 // Mini Progress Bar
-                const progressFill = (r.paso_actual / 10) * 100;
+                const maxSteps = r.ruta === 'peru_compras' ? 4 : 10;
+                const progressFill = (r.paso_actual / maxSteps) * 100;
                 const progressMini = `
-                    <div class="progress-mini-wrapper" title="Paso ${r.paso_actual} de 10 completados">
+                    <div class="progress-mini-wrapper" title="Paso ${r.paso_actual} de ${maxSteps} completados">
                         <div class="progress-mini-bar">
                             <div class="progress-mini-fill" style="width: ${progressFill}%; background-color: ${r.Estado === 'Bloqueado' ? 'var(--danger)' : 'var(--success)'}"></div>
                         </div>
-                        <span class="progress-mini-text">${r.paso_actual}/10</span>
+                        <span class="progress-mini-text">${r.paso_actual}/${maxSteps}</span>
                     </div>
                 `;
 
@@ -3388,44 +3362,68 @@
             activeRequirement = null;
         }
 
-        // UPDATE THE 10-STEP VISUAL TIMELINE COMPONENT
+        // UPDATE THE DYNAMIC-STEP VISUAL TIMELINE COMPONENT
         function updateModalTimelineVisuals(req) {
-            const trackFill = document.getElementById('modalTimelineTrackFill');
-            const stepPercent = ((req.paso_actual - 1) / 9) * 100;
-            trackFill.style.width = `${stepPercent}%`;
+            const wrapper = document.getElementById('modalTimelineWrapper');
+            if (!wrapper) return;
             
-            // Toggle route text
+            // Clear dynamic nodes but keep the track line
+            const track = wrapper.querySelector('.timeline-track');
+            wrapper.innerHTML = '';
+            wrapper.appendChild(track);
+
+            const steps = ROUTE_STEPS[req.ruta] || ROUTE_STEPS['menor_8_uit'];
+            const totalSteps = steps.length;
+            const currentStep = Math.min(parseInt(req.paso_actual) || 1, totalSteps);
+
+            // Populate nodes dynamically
+            steps.forEach((step, idx) => {
+                const stepNum = idx + 1;
+                const node = document.createElement('div');
+                node.className = 'timeline-node';
+                node.setAttribute('data-step', stepNum);
+                
+                if (stepNum < currentStep) {
+                    node.classList.add('completed');
+                } else if (stepNum === currentStep) {
+                    node.classList.add('active');
+                }
+
+                node.innerHTML = `
+                    <div class="timeline-circle">${stepNum < currentStep ? '✓' : stepNum}</div>
+                    <div class="timeline-label">${step.code}</div>
+                    <div class="timeline-tooltip">Paso ${stepNum}: ${step.desc}</div>
+                `;
+                wrapper.appendChild(node);
+            });
+
+            // Update track fill percentage width
+            const trackFill = document.getElementById('modalTimelineTrackFill');
+            if (trackFill) {
+                const stepPercent = totalSteps > 1 ? ((currentStep - 1) / (totalSteps - 1)) * 100 : 100;
+                trackFill.style.width = `${stepPercent}%`;
+            }
+            
+            // Toggle route text title
             const routeTitleSpan = document.getElementById('modalRouteTitle');
             const sectionEl = document.getElementById('modalTimelineSection');
             
-            sectionEl.className = 'timeline-section';
-            if (req.Estado === 'Bloqueado') {
-                sectionEl.classList.add('blocked');
-            }
-
-            if (req.ruta === 'peru_compras') {
-                routeTitleSpan.textContent = "Contratación por Catálogo Electrónico (Perú Compras)";
-            } else if (req.ruta === 'seace') {
-                routeTitleSpan.textContent = "Bienes SEACE (Proceso Mayor a 8 UIT)";
-            } else {
-                routeTitleSpan.textContent = "Bienes Menor a 8 UIT (Proceso Directo)";
-            }
-
-            const nodes = document.querySelectorAll('.timeline-node');
-            nodes.forEach(node => {
-                const stepNum = parseInt(node.getAttribute('data-step'));
-                node.className = 'timeline-node';
-                
-                const circle = node.querySelector('.timeline-circle');
-                circle.innerHTML = stepNum; // Reset back to step number
-
-                if (stepNum < req.paso_actual) {
-                    node.classList.add('completed');
-                    circle.innerHTML = '✓';
-                } else if (stepNum === req.paso_actual) {
-                    node.classList.add('active');
+            if (sectionEl) {
+                sectionEl.className = 'timeline-section';
+                if (req.Estado === 'Bloqueado') {
+                    sectionEl.classList.add('blocked');
                 }
-            });
+            }
+
+            if (routeTitleSpan) {
+                if (req.ruta === 'peru_compras') {
+                    routeTitleSpan.textContent = "Contratación por Catálogo Electrónico (Perú Compras)";
+                } else if (req.ruta === 'seace') {
+                    routeTitleSpan.textContent = "Bienes SEACE (Proceso Mayor a 8 UIT)";
+                } else {
+                    routeTitleSpan.textContent = "Bienes Menor a 8 UIT (Proceso Directo)";
+                }
+            }
         }
 
         // EDIT MODE FOR DETAIL FORM
@@ -3440,7 +3438,12 @@
             document.getElementById('editPropietario').value = activeRequirement.Propietario || '';
             document.getElementById('editEstado').value = activeRequirement.Estado || 'En curso';
             document.getElementById('editAnexo03').value = activeRequirement["PROGRAMADO ANEXO 03"] || 'SI';
-            document.getElementById('editRuta').value = activeRequirement.ruta || 'menor_8_uit';
+            const reqRuta = activeRequirement.ruta || 'menor_8_uit';
+            document.getElementById('editRuta').value = reqRuta;
+            
+            // Populate the steps options based on the requirement's route
+            populateEditStepDropdown(reqRuta);
+            
             document.getElementById('editPasoActual').value = activeRequirement.paso_actual || '1';
             document.getElementById('editOficina').value = activeRequirement.oficina || '';
             document.getElementById('editConQuien').value = activeRequirement.con_quien || '';
@@ -3805,6 +3808,35 @@
             updateModalTimelineVisuals(tempReq);
         }
 
+        function populateEditStepDropdown(ruta) {
+            const select = document.getElementById('editPasoActual');
+            if (!select) return;
+            select.innerHTML = '';
+            
+            const steps = ROUTE_STEPS[ruta] || ROUTE_STEPS['menor_8_uit'];
+            steps.forEach((step, idx) => {
+                const stepNum = idx + 1;
+                const opt = document.createElement('option');
+                opt.value = stepNum;
+                opt.textContent = `Paso ${stepNum}: ${step.code} (${step.desc})`;
+                select.appendChild(opt);
+            });
+        }
+
+        function handleEditRutaChange() {
+            const ruta = document.getElementById('editRuta').value;
+            populateEditStepDropdown(ruta);
+            
+            // If the current selected step is out of bounds for the new route, cap it
+            const selectPaso = document.getElementById('editPasoActual');
+            const maxSteps = ROUTE_STEPS[ruta] ? ROUTE_STEPS[ruta].length : 10;
+            if (parseInt(selectPaso.value) > maxSteps) {
+                selectPaso.value = maxSteps;
+            }
+            
+            updateFormTimelineNodes();
+        }
+
         // --- NEW DYNAMIC FUNCTIONS FOR COMMENT FEED & DIAGRAM ZOOM ---
 
         // Self-healing function to ensure all requirements have required tracking fields
@@ -3858,11 +3890,17 @@
 
                 // Ensure oficina
                 if (!r.oficina) {
-                    if (r.paso_actual <= 2) r.oficina = "Planificación / Residencia";
-                    else if (r.paso_actual <= 4) r.oficina = "Cotizaciones (Ingreso)";
-                    else if (r.paso_actual <= 6) r.oficina = "Cotizaciones (Proceso)";
-                    else if (r.paso_actual <= 9) r.oficina = "Abastecimiento (OASA)";
-                    else r.oficina = "Trámite Concluido";
+                    if (r.ruta === 'peru_compras') {
+                        if (r.paso_actual <= 2) r.oficina = "Planificación / Residencia";
+                        else if (r.paso_actual === 3) r.oficina = "Abastecimiento (OASA)";
+                        else r.oficina = "Notificación de Orden";
+                    } else {
+                        if (r.paso_actual <= 2) r.oficina = "Planificación / Residencia";
+                        else if (r.paso_actual <= 4) r.oficina = "Cotizaciones (Jefe)";
+                        else if (r.paso_actual <= 6) r.oficina = "Cotizaciones (Proceso)";
+                        else if (r.paso_actual <= 9) r.oficina = "Abastecimiento (OASA)";
+                        else r.oficina = "Trámite Concluido";
+                    }
                     modified = true;
                 }
 
@@ -4461,12 +4499,13 @@
                 
                 const stepNames = {
                     'seace': ["1.PROG", "2.ADMI", "3.ESTU", "4.APRO", "5.INTE", "6.DOCU", "7.APRO", "8.SEAC", "9.BUEN", "10.TRAM"],
-                    'menor_8_uit': ["1.PROG", "2.ADMI", "3.J-COTI", "4.J-COTI", "5.COTI", "6.COTI", "7.OASA", "8.OASA", "9.OASA", "10.TRAM"],
-                    'peru_compras': ["1.PROG", "2.ADMI", "3.PC-CO", "4.PC-PR", "5.PC-EM", "6.PC-SE", "7.OASA", "8.OASA", "9.OASA", "10.TRAM"]
+                    'menor_8_uit': ["1.PROG", "2.ADMI", "3.J-COTI", "4.J-COTI", "5.J-COTI", "6.J-COTI", "7.OASA", "8.OASA", "9.OASA", "10.OASA"],
+                    'peru_compras': ["1.PROG", "2.ADMI", "3.OASA", "4.OASA"]
                 };
                 const routeSteps = stepNames[r.ruta] || stepNames['menor_8_uit'];
                 const stepNum = parseInt(r.paso_actual) || 1;
-                const stepLabel = routeSteps[stepNum - 1] || `${stepNum}/10`;
+                const maxSteps = r.ruta === 'peru_compras' ? 4 : 10;
+                const stepLabel = routeSteps[stepNum - 1] || `${stepNum}/${maxSteps}`;
 
                 html += `
                     <tr style="border-bottom: 1px solid #e2e8f0; height: 32px;">
