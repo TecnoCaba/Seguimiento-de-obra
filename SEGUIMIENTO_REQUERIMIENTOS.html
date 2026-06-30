@@ -1826,7 +1826,7 @@
             </button>
 
             <div style="text-align: center; margin-top: 25px; font-size: 0.78rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.5px;">
-                Versión 1.1.0
+                Versión 1.1.1
             </div>
         </div>
     </div>
@@ -1841,7 +1841,7 @@
                     <i data-lucide="git-pull-request" style="width: 22px; height: 22px;"></i>
                 </div>
                 <div class="brand-text">
-                    <h1>GESTIÓN DE REQUERIMIENTOS <span style="font-size: 0.72rem; font-weight: 700; color: var(--warning-dark); background-color: var(--warning-light); padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 8px; border: 1px solid rgba(245, 158, 11, 0.2); display: inline-block;">v1.1.0</span></h1>
+                    <h1>GESTIÓN DE REQUERIMIENTOS <span style="font-size: 0.72rem; font-weight: 700; color: var(--warning-dark); background-color: var(--warning-light); padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 8px; border: 1px solid rgba(245, 158, 11, 0.2); display: inline-block;">v1.1.1</span></h1>
                     <p>Obra: Mejoramiento de los Servicios de Educación Superior del ISTP Cabanillas</p>
                 </div>
             </div>
@@ -1873,7 +1873,6 @@
                 <button class="tab-btn active" onclick="switchTab('tab-dashboard')">📊 Panel Principal</button>
                 <button class="tab-btn" onclick="switchTab('tab-normativa')">📋 Validar Requerimiento</button>
                 <button class="tab-btn" onclick="switchTab('tab-diagrama')">🗺️ Diagrama de Gestión de Req</button>
-                <button class="tab-btn" onclick="switchTab('tab-ayuda')">📄 Caso Real</button>
             </div>
 
             <!-- TAB 1: DASHBOARD AND DATA -->
@@ -2103,83 +2102,6 @@
             <!-- TAB 3: DIAGRAM -->
             <div id="tab-diagrama" class="tab-pane" style="padding: 10px; background-color: #f8fafc; height: calc(100vh - 120px);">
                 <iframe src="./GESTION_DE_REQ.html" style="width: 100%; height: 100%; border: none; border-radius: 12px; background-color: #ffffff; box-shadow: var(--shadow-sm);"></iframe>
-            </div>
-
-            <!-- TAB 3: REAL-WORLD CASE STUDY EXAMPLES -->
-            <div id="tab-ayuda" class="tab-pane">
-                <div class="normative-card">
-                    <div class="normative-header">
-                        <i data-lucide="book-open" style="width: 28px; height: 28px; color: var(--primary);"></i>
-                        <h3>Casos Prácticos de Obra - ISTP Cabanillas</h3>
-                    </div>
-                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
-                        Ejemplos aplicados de adecuación normativas basados en las fichas OSCE y Perú Compras para la obra: <em>"Mejoramiento de los Servicios de Educación Superior del ISTP Cabanillas"</em>.
-                    </p>
-
-                    <div class="example-card peru-compras">
-                        <h3>Caso Asfalto: Adecuación por Catálogo Electrónico</h3>
-                        <span class="doc-ref">📄 INFORME Nº 030-2026-GRP/GRI-RO</span>
-                        <span class="doc-ref">📄 MEMORANDUM N°030-2026-GRP/GRI-S</span>
-                        <p style="font-size: 0.9rem; margin-top: 6px;"><strong>Análisis Normativo:</strong> El bien existe en catálogo y al tener un monto programado <strong>mayor a S/ 1,000</strong>, la ley exige su compra obligatoria por Catálogos Electrónicos (Perú Compras), sin importar si es menor o mayor a 8 UIT.</p>
-                        <p style="font-size: 0.9rem; margin-top: 6px;"><strong>Solución:</strong> El Residente de Obra elaboró el Informe Técnico sustentando la "Identidad Técnica Absoluta" y el Supervisor aprobó con Memorándum para adecuar la denominación exacta a la ficha homologada de Perú Compras sin alterar las metas físicas del proyecto.</p>
-                        <div class="table-responsive">
-                            <table class="normative-table">
-                                <thead>
-                                    <tr>
-                                        <th>Origen (Exp. Mod 03)</th>
-                                        <th>Condición</th>
-                                        <th>Denominación Oficial Obligatoria (Perú Compras)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="color:#ef4444; font-weight:bold;">Asfalto RC - 250</td>
-                                        <td><strong>S/. 5,250.00</strong> (&gt; S/ 1,000)</td>
-                                        <td style="color:#166534; font-weight:bold;">ASFALTO LÍQUIDO CUT BACK RC-250 (CURADO RÁPIDO GRADO RC-250)</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="example-card" style="margin-top: 20px;">
-                        <h3>Caso Exclusión: Monto Menor o Igual a S/ 1,000</h3>
-                        <p style="font-size: 0.9rem;"><strong>Regla:</strong> Si un bien figura en la Ficha Técnica OSCE o Perú Compras, pero su monto referencial es de <strong>S/ 1,000 o menos</strong>, la normativa no exige obligatoriamente tramitarlo por el Acuerdo Marco.</p>
-                        <p style="font-size: 0.9rem; margin-top: 6px;"><strong>Flujo de Compra:</strong> Se excluye del catálogo electrónico y se tramita directamente como adquisición regular menor (evitando la homologación formal de la etiqueta y acelerando el proceso de compra menor en la obra).</p>
-                    </div>
-
-                    <div class="example-card" style="margin-top: 20px;">
-                        <h3>Caso Programación Directa (Ruta Normal)</h3>
-                        <span class="doc-ref">📄 ANEXO Nº 03</span>
-                        <p style="font-size: 0.9rem; margin-top: 6px;"><strong>Contexto:</strong> Materiales que coinciden de manera exacta en nombre, unidad y cantidad con el Presupuesto Analítico del Expediente de Obra. Pasan de manera directa.</p>
-                        <div class="table-responsive">
-                            <table class="normative-table">
-                                <thead>
-                                    <tr>
-                                        <th>Clasificador</th>
-                                        <th>Descripción Aprobada</th>
-                                        <th>Unidad</th>
-                                        <th>Valor Total S/</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>2.6.2.2.2.4</td>
-                                        <td>CONCRETO PREMEZCLADO 280 KG/CM² CON CEMENTO TIPO IP</td>
-                                        <td>M3</td>
-                                        <td>S/. 5,250.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2.6.3.2.2.1</td>
-                                        <td>TRANSFORMADOR DE AISLAMIENTO 40KVA</td>
-                                        <td>UNIDAD</td>
-                                        <td>S/. 5,000.00</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
             </div>
 
         </main>
