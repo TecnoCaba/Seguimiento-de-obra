@@ -1752,9 +1752,28 @@
             70% { transform: scale(1.03); box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
         }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
+
+    <!-- SPLASH UPDATE SCREEN -->
+    <div id="splashUpdateOverlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 99999; font-family: 'Plus Jakarta Sans', sans-serif;">
+        <div class="logo" style="margin-bottom: 20px; animation: pulse 2s infinite; display: flex; align-items: center; justify-content: center; background-color: #eff6ff; width: 100px; height: 100px; border-radius: 50%;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-pull-request"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M6 9v12"/></svg>
+        </div>
+        <h2 style="font-size: 1.35rem; font-weight: 800; color: #1e293b; margin-bottom: 8px; font-family: 'Outfit', sans-serif; letter-spacing: 0.5px;">GESTIÓN DE REQUERIMIENTOS</h2>
+        <div style="display: flex; align-items: center; gap: 10px; color: #64748b; font-size: 0.9rem; font-weight: 500;">
+            <div style="width: 18px; height: 18px; border: 3px solid #e2e8f0; border-top-color: #2563eb; border-radius: 50%; animation: spin 1s linear infinite; box-sizing: border-box;"></div>
+            <span>Buscando actualizaciones...</span>
+        </div>
+        <div style="position: absolute; bottom: 30px; font-size: 0.78rem; color: #94a3b8; font-weight: 600; letter-spacing: 0.5px;">
+            Versión 1.0.8
+        </div>
+    </div>
 
     <!-- LOGIN SCREEN -->
     <div class="login-overlay" id="loginOverlay">
@@ -2714,6 +2733,22 @@
 
         // Initialize application on window load
         window.addEventListener('DOMContentLoaded', async () => {
+            // Splash check timeout (dismiss after 1.5s if no updates)
+            const splashTimeout = setTimeout(() => {
+                dismissSplash();
+            }, 1500);
+
+            function dismissSplash() {
+                const splash = document.getElementById('splashUpdateOverlay');
+                if (splash) {
+                    splash.style.transition = 'opacity 0.4s ease';
+                    splash.style.opacity = '0';
+                    setTimeout(() => {
+                        splash.style.display = 'none';
+                    }, 400);
+                }
+            }
+
             lucide.createIcons();
             
             // Register PWA Service Worker with automatic updates detection
