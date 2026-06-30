@@ -1,0 +1,24 @@
+{
+  "name": "Sistema de Seguimiento de Requerimientos - ISTP Cabanillas",
+  "short_name": "Seg. Requerimientos",
+  "description": "Sistema de gestión y seguimiento de requerimientos para la obra del ISTP Cabanillas",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#1e3a8a",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
