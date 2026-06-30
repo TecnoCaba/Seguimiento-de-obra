@@ -1826,7 +1826,7 @@
             </button>
 
             <div style="text-align: center; margin-top: 25px; font-size: 0.78rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.5px;">
-                Versión 1.0.8
+                Versión 1.1.0
             </div>
         </div>
     </div>
@@ -1841,7 +1841,7 @@
                     <i data-lucide="git-pull-request" style="width: 22px; height: 22px;"></i>
                 </div>
                 <div class="brand-text">
-                    <h1>GESTIÓN DE REQUERIMIENTOS <span style="font-size: 0.72rem; font-weight: 700; color: var(--warning-dark); background-color: var(--warning-light); padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 8px; border: 1px solid rgba(245, 158, 11, 0.2); display: inline-block;">v1.0.8</span></h1>
+                    <h1>GESTIÓN DE REQUERIMIENTOS <span style="font-size: 0.72rem; font-weight: 700; color: var(--warning-dark); background-color: var(--warning-light); padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 8px; border: 1px solid rgba(245, 158, 11, 0.2); display: inline-block;">v1.1.0</span></h1>
                     <p>Obra: Mejoramiento de los Servicios de Educación Superior del ISTP Cabanillas</p>
                 </div>
             </div>
@@ -2100,173 +2100,9 @@
             </div>
 
             <!-- TAB 4: DIAGRAMA NORMATIVO -->
-            <div id="tab-diagrama" class="tab-pane">
-                <div class="normative-card">
-                    <div class="normative-header">
-                        <i data-lucide="git-fork" style="width: 28px; height: 28px; color: var(--primary);"></i>
-                        <h3>Flujograma del Proceso de Gestión de Requerimientos</h3>
-                    </div>
-                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">
-                        Control Normativo: Fichas OSCE, Catálogo Perú Compras y Procedimientos SEACE según la Ley N° 32069 (Ley General de Contrataciones Públicas).
-                    </p>
-
-                    <!-- BARRA DE ENLACES OFICIALES -->
-                    <div class="quick-links-bar">
-                        <a href="https://prod2.seace.gob.pe/buscador-bienescomunes/bienesServiciosComunes/listadoBienesServiciosComunes" target="_blank" rel="noopener noreferrer" class="link-btn osce">
-                            🔍 Buscar Ficha Técnica OSCE (SEACE) ↗
-                        </a>
-                        <a href="https://buscadorcatalogos.perucompras.gob.pe/" target="_blank" rel="noopener noreferrer" class="link-btn perucompras">
-                            🛒 Catálogos Electrónicos PERÚ COMPRAS ↗
-                        </a>
-                    </div>
-                    
-                    <p class="zoom-instruction">
-                        📱 En celular: Desliza con el dedo para moverte o usa los botones.<br>
-                        💻 En PC: Usa la rueda del ratón (Scroll) para acercar/alejar.
-                    </p>
-                    
-                    <div class="zoom-controls">
-                        <button class="btn-zoom" onclick="zoomInDiagram()">➕ Acercar</button>
-                        <button class="btn-zoom" onclick="zoomOutDiagram()">➖ Alejar</button>
-                        <button class="btn-zoom" onclick="resetZoomDiagram()">🔄 Restablecer</button>
-                    </div>
-
-                    <div class="diagram-container" id="panZoomContainer" style="height: 600px; margin-bottom: 25px;">
-                        <div class="mermaid-wrapper" id="mermaidWrapper">
-                            <div class="mermaid">
-                                %%{init: {'theme': 'base', 'themeVariables': { 'fontFamily': 'Segoe UI', 'primaryColor': '#eff6ff', 'primaryBorderColor': '#3b82f6', 'lineColor': '#94a3b8', 'secondaryColor': '#fef3c7', 'tertiaryColor': '#f1f5f9'}}}%%
-                                graph TD
-                                A(["INICIO: Necesidad de Bien o Servicio"]) --> B{"¿Está en Presupuesto <br>Analítico Exp. Mod 03?"}
-                                
-                                B -->|NO| C["⛔ RECHAZO ABSOLUTO"]
-                                B -->|SÍ| D["Programar mediante ANEXO Nº 03"]
-                                
-                                D --> E{"¿El bien cuenta con Ficha OSCE<br>o Catálogo PERÚ COMPRAS?"}
-                                
-                                E -->|SÍ| F{"¿Monto Referencial es <br> MAYOR a S/ 1,000?"}
-                                E -->|NO| H["Proceso Regular<br>Monto menor o igual a S/ 1,000 NO ingresa a Perú Compras"]
-                                
-                                F -->|SÍ| G["⚠️ ADQUISICIÓN OBLIGATORIA POR PERÚ COMPRAS<br>Independientemente de si es menor o mayor a 8 UIT"]
-                                F -->|NO| H
-                                
-                                G --> I["Adecuar Requerimiento a Ficha Oficial"]
-                                I --> J{"¿Varía Nombre o Unidad <br>respecto al Analítico?"}
-                                H --> J
-                                
-                                J -->|SÍ| K["Elaborar INFORME TÉCNICO <br>justificando adecuación"]
-                                K --> L["Aprobación con MEMORÁNDUM"]
-                                L --> M
-                                
-                                J -->|NO| M{"¿La cantidad en obra implica <br>metrado mayor?"}
-                                
-                                M -->|SÍ| N["Elaborar ANEXO 10 de justificación"]
-                                N --> O["Aprobación mediante ACTO RESOLUTIVO"]
-                                O --> P
-                                
-                                M -->|NO| P["Elaborar Requerimiento Final: EETT / TDR"]
-                                
-                                P --> Q{"¿EETT/TDR coinciden 100% en<br>Denom/Unid/Cant con Anexos aprobados?"}
-                                
-                                Q -->|NO| R["⛔ RECHAZO: No procede trámite"]
-                                Q -->|SÍ| S["✅ REQUERIMIENTO VALIDADO Y APTO PARA TRÁMITE"]
-
-                                classDef reject fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#991b1b,font-weight:bold;
-                                classDef approve fill:#dcfce3,stroke:#22c55e,stroke-width:2px,color:#166534,font-weight:bold;
-                                classDef process fill:#eff6ff,stroke:#3b82f6,stroke-width:1.5px,color:#1e3a8a;
-                                classDef perucompras fill:#fef08a,stroke:#ca8a04,stroke-width:2px,color:#854d0e,font-weight:bold;
-                                classDef decision fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#92400e;
-                                classDef start fill:#f1f5f9,stroke:#64748b,stroke-width:2px,font-weight:bold,color:#334155;
-
-                                class C,R reject;
-                                class S approve;
-                                class D,K,L,N,O,P,H,I process;
-                                class G perucompras;
-                                class B,E,F,J,M,Q decision;
-                                class A start;
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- TABLA DE TOPES DE LA LEY 32069 -->
-                    <div style="margin-top: 30px; border-top: 1px solid var(--border-light); padding-top: 20px;">
-                        <h3 style="font-family: 'Outfit', sans-serif; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                            <i data-lucide="table" style="width: 22px; height: 22px;"></i>
-                            Topes para Procedimientos de Selección - Ley N° 32069 (Año Fiscal 2026)
-                        </h3>
-                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
-                            Montos aplicables para contrataciones del régimen general de adquisiciones públicas, expresados en Soles (1 UIT 2026 = S/ 5,500).
-                        </p>
-                        
-                        <div class="table-responsive">
-                            <table class="normative-table">
-                                <thead>
-                                    <tr>
-                                        <th>Tipo de Procedimiento</th>
-                                        <th>Bienes</th>
-                                        <th>Servicios (General y Consultoría)</th>
-                                        <th>Obras</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="font-weight: bold; color: var(--primary);">Licitación Pública</td>
-                                        <td>&ge; S/ 485,000</td>
-                                        <td>-</td>
-                                        <td>&ge; S/ 5,000,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: bold; color: var(--primary);">Licitación Pública Abreviada</td>
-                                        <td>&gt; S/ 44,000 y &lt; S/ 485,000</td>
-                                        <td>-</td>
-                                        <td>&gt; S/ 44,000 y &lt; S/ 5,000,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: bold; color: var(--primary);">Concurso Público</td>
-                                        <td>-</td>
-                                        <td>&ge; S/ 485,000</td>
-                                        <td>-</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: bold; color: var(--primary);">Concurso Público Abreviado / Gerentes de Proyectos</td>
-                                        <td>-</td>
-                                        <td>&gt; S/ 44,000 y &lt; S/ 485,000</td>
-                                        <td>-</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: bold; color: var(--primary);">Concurso Público para Evaluadores Expertos</td>
-                                        <td>-</td>
-                                        <td>&gt; S/ 44,000 y &lt; S/ 100,000</td>
-                                        <td>-</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: bold; color: var(--primary);">Comparación de Precios</td>
-                                        <td>&gt; S/ 44,000 y &le; S/ 100,000</td>
-                                        <td>&gt; S/ 44,000 y &le; S/ 100,000</td>
-                                        <td>-</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: bold; color: var(--primary);">Subasta Inversa Electrónica</td>
-                                        <td>&gt; S/ 44,000 (Con Ficha Técnica)</td>
-                                        <td>&gt; S/ 44,000 (Con Ficha Técnica)</td>
-                                        <td>-</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: bold; color: var(--primary);">Contratación Directa</td>
-                                        <td>&gt; S/ 44,000</td>
-                                        <td>&gt; S/ 44,000</td>
-                                        <td>&gt; S/ 44,000</td>
-                                    </tr>
-                                    <tr style="background-color: var(--warning-light);">
-                                        <td style="font-weight: bold; color: var(--warning-dark);">Compras Menores o Iguales a 8 UIT (Excluidas)</td>
-                                        <td style="font-weight: bold; color: var(--warning-dark);">&le; S/ 44,000 (Fuera de Selección)</td>
-                                        <td style="font-weight: bold; color: var(--warning-dark);">&le; S/ 44,000 (Fuera de Selección)</td>
-                                        <td style="font-weight: bold; color: var(--warning-dark);">-</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+            <!-- TAB 3: DIAGRAM -->
+            <div id="tab-diagrama" class="tab-pane" style="padding: 10px; background-color: #f8fafc; height: calc(100vh - 120px);">
+                <iframe src="./GESTIÓN_DE_REQ.html" style="width: 100%; height: 100%; border: none; border-radius: 12px; background-color: #ffffff; box-shadow: var(--shadow-sm);"></iframe>
             </div>
 
             <!-- TAB 3: REAL-WORLD CASE STUDY EXAMPLES -->
@@ -2857,7 +2693,6 @@
             populateFilters();
             runApp();
             runValidationCheck(); // Run initial validation tool state
-            initDiagramControls();
         });
 
         function saveToLocalStorage() {
@@ -4248,71 +4083,7 @@
             }
         }
 
-        // --- MERMAID DIAGRAM PAN & ZOOM CONTROLS ---
-        let diagramScale = 0.85;
-        let diagramTranslateX = 10;
-        let diagramTranslateY = 10;
 
-        function updateDiagramTransform() {
-            const wrapper = document.getElementById('mermaidWrapper');
-            if (wrapper) {
-                wrapper.style.transform = `translate(${diagramTranslateX}px, ${diagramTranslateY}px) scale(${diagramScale})`;
-            }
-        }
-
-        function zoomInDiagram() {
-            diagramScale = Math.min(3, diagramScale + 0.15);
-            updateDiagramTransform();
-        }
-
-        function zoomOutDiagram() {
-            diagramScale = Math.max(0.3, diagramScale - 0.15);
-            updateDiagramTransform();
-        }
-
-        function resetZoomDiagram() {
-            diagramScale = window.innerWidth < 768 ? 0.6 : 0.85;
-            diagramTranslateX = 10;
-            diagramTranslateY = 10;
-            updateDiagramTransform();
-        }
-
-        function initDiagramControls() {
-            const container = document.getElementById('panZoomContainer');
-            if (!container) return;
-            
-            let isDragging = false;
-            let startX, startY;
-
-            container.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                startX = e.clientX - diagramTranslateX;
-                startY = e.clientY - diagramTranslateY;
-                container.style.cursor = 'grabbing';
-            });
-
-            container.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                e.preventDefault();
-                diagramTranslateX = e.clientX - startX;
-                diagramTranslateY = e.clientY - startY;
-                updateDiagramTransform();
-            });
-
-            window.addEventListener('mouseup', () => {
-                isDragging = false;
-                if (container) container.style.cursor = 'default';
-            });
-            
-            container.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                const delta = e.deltaY > 0 ? -0.08 : 0.08;
-                diagramScale = Math.min(Math.max(0.3, diagramScale + delta), 3);
-                updateDiagramTransform();
-            }, { passive: false });
-            
-            resetZoomDiagram();
-        }
 
         // PRINT LAYOUT FOR SINGLE REQUIREMENT (A4 LANDSCAPE)
         function printRequirementSummary() {
