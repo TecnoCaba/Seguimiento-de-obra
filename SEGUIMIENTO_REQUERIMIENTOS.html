@@ -1807,7 +1807,7 @@
             </button>
 
             <div style="text-align: center; margin-top: 25px; font-size: 0.78rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.5px;">
-                Versión 1.0.7
+                Versión 1.0.8
             </div>
         </div>
     </div>
@@ -1822,7 +1822,7 @@
                     <i data-lucide="git-pull-request" style="width: 22px; height: 22px;"></i>
                 </div>
                 <div class="brand-text">
-                    <h1>GESTIÓN DE REQUERIMIENTOS <span style="font-size: 0.72rem; font-weight: 700; color: var(--warning-dark); background-color: var(--warning-light); padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 8px; border: 1px solid rgba(245, 158, 11, 0.2); display: inline-block;">v1.0.7</span></h1>
+                    <h1>GESTIÓN DE REQUERIMIENTOS <span style="font-size: 0.72rem; font-weight: 700; color: var(--warning-dark); background-color: var(--warning-light); padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 8px; border: 1px solid rgba(245, 158, 11, 0.2); display: inline-block;">v1.0.8</span></h1>
                     <p>Obra: Mejoramiento de los Servicios de Educación Superior del ISTP Cabanillas</p>
                 </div>
             </div>
@@ -2117,39 +2117,39 @@
                             <div class="mermaid">
                                 %%{init: {'theme': 'base', 'themeVariables': { 'fontFamily': 'Segoe UI', 'primaryColor': '#eff6ff', 'primaryBorderColor': '#3b82f6', 'lineColor': '#94a3b8', 'secondaryColor': '#fef3c7', 'tertiaryColor': '#f1f5f9'}}}%%
                                 graph TD
-                                A([INICIO: Necesidad de Bien o Servicio]) --> B{¿Está en Presupuesto <br>Analítico Exp. Mod 03?}
+                                A(["INICIO: Necesidad de Bien o Servicio"]) --> B{"¿Está en Presupuesto <br>Analítico Exp. Mod 03?"}
                                 
-                                B -- NO --> C[/⛔ RECHAZO ABSOLUTO/]
-                                B -- SÍ --> D[Programar mediante ANEXO Nº 03]
+                                B -- NO --> C["⛔ RECHAZO ABSOLUTO"]
+                                B -- SÍ --> D["Programar mediante ANEXO Nº 03"]
                                 
-                                D --> E{¿El bien cuenta con Ficha OSCE<br>o Catálogo PERÚ COMPRAS?}
+                                D --> E{"¿El bien cuenta con Ficha OSCE<br>o Catálogo PERÚ COMPRAS?"}
                                 
-                                E -- SÍ --> F{¿Monto Referencial es <br> MAYOR a S/ 1,000?}
+                                E -- SÍ --> F{"¿Monto Referencial es <br> MAYOR a S/ 1,000?"}
                                 
-                                F -- SÍ --> G[⚠️ ADQUISICIÓN OBLIGATORIA POR PERÚ COMPRAS<br>Independientemente de si es menor o mayor a 8 UIT]
-                                F -- NO --> H[Proceso Regular<br>Monto &lt;= S/ 1000 NO ingresa a Perú Compras]
+                                F -- SÍ --> G["⚠️ ADQUISICIÓN OBLIGATORIA POR PERÚ COMPRAS<br>Independientemente de si es menor o mayor a 8 UIT"]
+                                F -- NO --> H["Proceso Regular<br>Monto <= S/ 1000 NO ingresa a Perú Compras"]
                                 E -- NO --> H
                                 
-                                G --> I[Adecuar Requerimiento a Ficha Oficial]
-                                I --> J{¿Varía Nombre o Unidad <br>respecto al Analítico?}
+                                G --> I["Adecuar Requerimiento a Ficha Oficial"]
+                                I --> J{"¿Varía Nombre o Unidad <br>respecto al Analítico?"}
                                 H --> J
                                 
-                                J -- SÍ --> K[Elaborar INFORME TÉCNICO <br>justificando adecuación]
-                                K --> L[Aprobación con MEMORÁNDUM]
+                                J -- SÍ --> K["Elaborar INFORME TÉCNICO <br>justificando adecuación"]
+                                K --> L["Aprobación con MEMORÁNDUM"]
                                 L --> M
                                 
-                                J -- NO --> M{¿La cantidad en obra implica <br>metrado mayor?}
+                                J -- NO --> M{"¿La cantidad en obra implica <br>metrado mayor?"}
                                 
-                                M -- SÍ --> N[Elaborar ANEXO 10 de justificación]
-                                N --> O[Aprobación mediante ACTO RESOLUTIVO]
+                                M -- SÍ --> N["Elaborar ANEXO 10 de justificación"]
+                                N --> O["Aprobación mediante ACTO RESOLUTIVO"]
                                 O --> P
                                 
-                                M -- NO --> P[Elaborar Requerimiento Final: EETT / TDR]
+                                M -- NO --> P["Elaborar Requerimiento Final: EETT / TDR"]
                                 
-                                P --> Q{¿EETT/TDR coinciden 100% en<br>Denom/Unid/Cant con Anexos aprobados?}
+                                P --> Q{"¿EETT/TDR coinciden 100% en<br>Denom/Unid/Cant con Anexos aprobados?"}
                                 
-                                Q -- NO --> R[/⛔ RECHAZO: No procede trámite/]
-                                Q -- SÍ --> S[/✅ REQUERIMIENTO VALIDADO Y APTO PARA TRÁMITE/]
+                                Q -- NO --> R["⛔ RECHAZO: No procede trámite"]
+                                Q -- SÍ --> S["✅ REQUERIMIENTO VALIDADO Y APTO PARA TRÁMITE"]
 
                                 classDef reject fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#991b1b,font-weight:bold;
                                 classDef approve fill:#dcfce3,stroke:#22c55e,stroke-width:2px,color:#166534,font-weight:bold;
@@ -2691,14 +2691,14 @@
             'seace': [
                 { code: "PROG", desc: "APROBACIÓN DE REQUERIMIENTO" },
                 { code: "ADMI", desc: "REVISIÓN DE REQUERIMIENTO" },
-                { code: "ESTU", desc: "ESTUDIO DE MERCADO / INDAGACIÓN" },
-                { code: "APRO", desc: "APROBACIÓN DE EXPEDIENTE" },
-                { code: "INTE", desc: "INTEGRACIÓN DE BASES" },
-                { code: "DOCU", desc: "DOCUMENTO DE CONVOCATORIA" },
-                { code: "APRO", desc: "APROBACIÓN DE COMITÉ" },
-                { code: "SEAC", desc: "PUBLICACIÓN SEACE" },
-                { code: "BUEN", desc: "OTORGAMIENTO DE BUENA PRO" },
-                { code: "TRAM", desc: "TRÁMITE DE SUSCRIPCIÓN / ORDEN" }
+                { code: "J-COTI", desc: "REVISIÓN DE REQUERIMIENTO" },
+                { code: "J-COTI", desc: "GENERACIÓN DE COTIZACIÓN" },
+                { code: "J-COTI", desc: "RECEPCIÓN DE COTIZACIÓN" },
+                { code: "J-COTI", desc: "GENERACIÓN DE CUADRO COMPARATIVO" },
+                { code: "OASA", desc: "RECEPCIÓN DE CUADRO COMPARATIVO" },
+                { code: "OASA", desc: "CERTIFICACIÓN DE CUADRO COMPARATIVO" },
+                { code: "OASA", desc: "GENERACIÓN DE ORDEN" },
+                { code: "OASA", desc: "NOTIFICACIÓN DE ORDEN" }
             ]
         };
         let filteredRequirements = [];
@@ -4498,7 +4498,7 @@
                 }
                 
                 const stepNames = {
-                    'seace': ["1.PROG", "2.ADMI", "3.ESTU", "4.APRO", "5.INTE", "6.DOCU", "7.APRO", "8.SEAC", "9.BUEN", "10.TRAM"],
+                    'seace': ["1.PROG", "2.ADMI", "3.J-COTI", "4.J-COTI", "5.J-COTI", "6.J-COTI", "7.OASA", "8.OASA", "9.OASA", "10.OASA"],
                     'menor_8_uit': ["1.PROG", "2.ADMI", "3.J-COTI", "4.J-COTI", "5.J-COTI", "6.J-COTI", "7.OASA", "8.OASA", "9.OASA", "10.OASA"],
                     'peru_compras': ["1.PROG", "2.ADMI", "3.OASA", "4.OASA"]
                 };
