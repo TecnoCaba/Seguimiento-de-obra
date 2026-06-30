@@ -290,39 +290,39 @@
                     <div class="mermaid">
                         %%{init: {'theme': 'base', 'themeVariables': { 'fontFamily': 'Segoe UI', 'primaryColor': '#eff6ff', 'primaryBorderColor': '#3b82f6', 'lineColor': '#94a3b8', 'secondaryColor': '#fef3c7', 'tertiaryColor': '#f1f5f9'}}}%%
                         graph TD
-                        A(["INICIO: Necesidad de Bien o Servicio"]) --> B{"¿Está en Presupuesto <br>Analítico Exp. Mod 03?"}
+                        A("INICIO: Necesidad de Bien o Servicio"):::start --> B{"¿Está en Presupuesto <br>Analítico Exp. Mod 03?"}:::decision
                         
-                        B -->|NO| C["⛔ RECHAZO ABSOLUTO"]
-                        B -->|SÍ| D["Programar mediante ANEXO Nº 03"]
+                        B -->|NO| C["RECHAZO ABSOLUTO"]:::reject
+                        B -->|SÍ| D["Programar mediante ANEXO N. 03"]:::process
                         
-                        D --> E{"¿El bien cuenta con Ficha OSCE<br>o Catálogo PERÚ COMPRAS?"}
+                        D --> E{"¿El bien cuenta con Ficha OSCE<br>o Catálogo PERÚ COMPRAS?"}:::decision
                         
-                        E -->|SÍ| F{"¿Monto Referencial es <br> MAYOR a S/ 1,000?"}
-                        E -->|NO| H["Proceso Regular<br>Monto menor o igual a S/ 1,000 NO ingresa a Perú Compras"]
+                        E -->|SÍ| F{"¿Monto Referencial es <br> MAYOR a S/ 1,000?"}:::decision
+                        E -->|NO| H["Proceso Regular<br>Monto menor o igual a S/ 1,000 NO ingresa a Perú Compras"]:::process
                         
-                        F -->|SÍ| G["⚠️ ADQUISICIÓN OBLIGATORIA POR PERÚ COMPRAS<br>Independientemente de si es menor o mayor a 8 UIT"]
+                        F -->|SÍ| G["ADQUISICIÓN OBLIGATORIA POR PERÚ COMPRAS<br>Independientemente de si es menor o mayor a 8 UIT"]:::perucompras
                         F -->|NO| H
                         
-                        G --> I["Adecuar Requerimiento a Ficha Oficial"]
-                        I --> J{"¿Varía Nombre o Unidad <br>respecto al Analítico?"}
+                        G --> I["Adecuar Requerimiento a Ficha Oficial"]:::process
+                        I --> J{"¿Varía Nombre o Unidad <br>respecto al Analítico?"}:::decision
                         H --> J
                         
-                        J -->|SÍ| K["Elaborar INFORME TÉCNICO <br>justificando adecuación"]
-                        K --> L["Aprobación con MEMORÁNDUM"]
-                        L --> M
+                        J -->|SÍ| K["Elaborar INFORME TÉCNICO <br>justificando adecuación"]:::process
+                        K --> L["Aprobación con MEMORÁNDUM"]:::process
+                        L --> M{"¿La cantidad en obra implica <br>metrado mayor?"}:::decision
                         
-                        J -->|NO| M{"¿La cantidad en obra implica <br>metrado mayor?"}
+                        J -->|NO| M
                         
-                        M -->|SÍ| N["Elaborar ANEXO 10 de justificación"]
-                        N --> O["Aprobación mediante ACTO RESOLUTIVO"]
-                        O --> P
+                        M -->|SÍ| N["Elaborar ANEXO 10 de justificación"]:::process
+                        N --> O["Aprobación mediante ACTO RESOLUTIVO"]:::process
+                        O --> P["Elaborar Requerimiento Final: EETT / TDR"]:::process
                         
-                        M -->|NO| P["Elaborar Requerimiento Final: EETT / TDR"]
+                        M -->|NO| P
                         
-                        P --> Q{"¿EETT/TDR coinciden 100% en<br>Denom/Unid/Cant con Anexos aprobados?"}
+                        P --> Q{"¿EETT/TDR coinciden 100% en<br>Denom/Unid/Cant con Anexos aprobados?"}:::decision
                         
-                        Q -->|NO| R["⛔ RECHAZO: No procede trámite"]
-                        Q -->|SÍ| S["✅ REQUERIMIENTO VALIDADO Y APTO PARA TRÁMITE"]
+                        Q -->|NO| R["RECHAZO: No procede trámite"]:::reject
+                        Q -->|SÍ| S["REQUERIMIENTO VALIDADO Y APTO PARA TRÁMITE"]:::approve
 
                         classDef reject fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#991b1b,font-weight:bold;
                         classDef approve fill:#dcfce3,stroke:#22c55e,stroke-width:2px,color:#166534,font-weight:bold;
@@ -330,13 +330,6 @@
                         classDef perucompras fill:#fef08a,stroke:#ca8a04,stroke-width:2px,color:#854d0e,font-weight:bold;
                         classDef decision fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#92400e;
                         classDef start fill:#f1f5f9,stroke:#64748b,stroke-width:2px,font-weight:bold,color:#334155;
-
-                        class C,R reject;
-                        class S approve;
-                        class D,K,L,N,O,P,H,I process;
-                        class G perucompras;
-                        class B,E,F,J,M,Q decision;
-                        class A start;
                     </div>
                 </div>
             </div>
