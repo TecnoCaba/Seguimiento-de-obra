@@ -2138,37 +2138,37 @@
                                 graph TD
                                 A(["INICIO: Necesidad de Bien o Servicio"]) --> B{"¿Está en Presupuesto <br>Analítico Exp. Mod 03?"}
                                 
-                                B -- NO --> C["⛔ RECHAZO ABSOLUTO"]
-                                B -- SÍ --> D["Programar mediante ANEXO Nº 03"]
+                                B -->|NO| C["⛔ RECHAZO ABSOLUTO"]
+                                B -->|SÍ| D["Programar mediante ANEXO Nº 03"]
                                 
                                 D --> E{"¿El bien cuenta con Ficha OSCE<br>o Catálogo PERÚ COMPRAS?"}
                                 
-                                E -- SÍ --> F{"¿Monto Referencial es <br> MAYOR a S/ 1,000?"}
+                                E -->|SÍ| F{"¿Monto Referencial es <br> MAYOR a S/ 1,000?"}
+                                E -->|NO| H["Proceso Regular<br>Monto menor o igual a S/ 1,000 NO ingresa a Perú Compras"]
                                 
-                                F -- SÍ --> G["⚠️ ADQUISICIÓN OBLIGATORIA POR PERÚ COMPRAS<br>Independientemente de si es menor o mayor a 8 UIT"]
-                                F -- NO --> H["Proceso Regular<br>Monto <= S/ 1000 NO ingresa a Perú Compras"]
-                                E -- NO --> H
+                                F -->|SÍ| G["⚠️ ADQUISICIÓN OBLIGATORIA POR PERÚ COMPRAS<br>Independientemente de si es menor o mayor a 8 UIT"]
+                                F -->|NO| H
                                 
                                 G --> I["Adecuar Requerimiento a Ficha Oficial"]
                                 I --> J{"¿Varía Nombre o Unidad <br>respecto al Analítico?"}
                                 H --> J
                                 
-                                J -- SÍ --> K["Elaborar INFORME TÉCNICO <br>justificando adecuación"]
+                                J -->|SÍ| K["Elaborar INFORME TÉCNICO <br>justificando adecuación"]
                                 K --> L["Aprobación con MEMORÁNDUM"]
                                 L --> M
                                 
-                                J -- NO --> M{"¿La cantidad en obra implica <br>metrado mayor?"}
+                                J -->|NO| M{"¿La cantidad en obra implica <br>metrado mayor?"}
                                 
-                                M -- SÍ --> N["Elaborar ANEXO 10 de justificación"]
+                                M -->|SÍ| N["Elaborar ANEXO 10 de justificación"]
                                 N --> O["Aprobación mediante ACTO RESOLUTIVO"]
                                 O --> P
                                 
-                                M -- NO --> P["Elaborar Requerimiento Final: EETT / TDR"]
+                                M -->|NO| P["Elaborar Requerimiento Final: EETT / TDR"]
                                 
                                 P --> Q{"¿EETT/TDR coinciden 100% en<br>Denom/Unid/Cant con Anexos aprobados?"}
                                 
-                                Q -- NO --> R["⛔ RECHAZO: No procede trámite"]
-                                Q -- SÍ --> S["✅ REQUERIMIENTO VALIDADO Y APTO PARA TRÁMITE"]
+                                Q -->|NO| R["⛔ RECHAZO: No procede trámite"]
+                                Q -->|SÍ| S["✅ REQUERIMIENTO VALIDADO Y APTO PARA TRÁMITE"]
 
                                 classDef reject fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#991b1b,font-weight:bold;
                                 classDef approve fill:#dcfce3,stroke:#22c55e,stroke-width:2px,color:#166534,font-weight:bold;
