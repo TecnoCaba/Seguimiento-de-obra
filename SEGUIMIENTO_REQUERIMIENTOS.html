@@ -1558,17 +1558,6 @@
                 <i data-lucide="eye" style="display:inline-block; width:16px; height:16px; vertical-align:middle; margin-right:4px;"></i> 
                 Acceder como Invitado (Público)
             </button>
-
-            <div class="login-credentials-help">
-                <h4>Guía de Credenciales para Pruebas:</h4>
-                <ul>
-                    <li><span>Administrador (Asistente 1):</span> <code>asistente1</code> / <code>req2026</code></li>
-                    <li><span>Administrador (Asistente 2):</span> <code>asistente2</code> / <code>req2026</code></li>
-                    <li><span>Administrador (Técnico):</span> <code>tecnico1</code> / <code>req2026</code></li>
-                    <li><span>Administrador General:</span> <code>admin</code> / <code>admin123</code></li>
-                    <li><span>Residente de Obra:</span> <code>residente1</code> / <code>residente123</code></li>
-                </ul>
-            </div>
         </div>
     </div>
 
@@ -1611,7 +1600,7 @@
                 <button class="tab-btn active" onclick="switchTab('tab-dashboard')">📊 Panel Principal</button>
                 <button class="tab-btn" onclick="switchTab('tab-normativa')">📋 Validador Normativo</button>
                 <button class="tab-btn" onclick="switchTab('tab-diagrama')">🗺️ Diagrama Normativo</button>
-                <button class="tab-btn" onclick="switchTab('tab-ayuda')">💡 Ayuda e Instrucciones</button>
+                <button class="tab-btn" onclick="switchTab('tab-ayuda')">📄 Casos Reales</button>
             </div>
 
             <!-- TAB 1: DASHBOARD AND DATA -->
@@ -1678,13 +1667,7 @@
                             <button class="btn btn-primary" id="btnNewReq" onclick="openNewReqModal()" style="display: none;">
                                 <i data-lucide="plus-circle" style="width: 18px; height: 18px;"></i> Nuevo Req.
                             </button>
-                            <button class="btn btn-secondary" onclick="exportData()">
-                                <i data-lucide="download" style="width: 18px; height: 18px;"></i> Exportar JSON
-                            </button>
-                            <button class="btn btn-secondary" id="btnImport" onclick="triggerImport()" style="display: none;">
-                                <i data-lucide="upload" style="width: 18px; height: 18px;"></i> Importar JSON
-                            </button>
-                            <input type="file" id="fileImportInput" style="display: none;" accept=".json" onchange="importData(event)">
+
                             <button class="btn btn-danger" onclick="resetToDefaults()" title="Restaurar base de datos a su estado inicial desde Excel">
                                 <i data-lucide="rotate-ccw" style="width: 18px; height: 18px;"></i> Reiniciar
                             </button>
@@ -2007,141 +1990,85 @@
                             </table>
                         </div>
                     </div>
-
-                    <!-- CASOS REALES DE OBRA -->
-                    <div style="margin-top: 30px; border-top: 1px solid var(--border-light); padding-top: 20px;">
-                        <h3 style="font-family: 'Outfit', sans-serif; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                            <i data-lucide="book-open" style="width: 22px; height: 22px;"></i>
-                            Casos Prácticos de Obra - ISTP Cabanillas
-                        </h3>
-                        
-                        <div class="example-card peru-compras">
-                            <h3>Caso Asfalto: Adecuación por Catálogo Electrónico</h3>
-                            <span class="doc-ref">📄 INFORME Nº 030-2026-GRP/GRI-RO</span>
-                            <span class="doc-ref">📄 MEMORANDUM N°030-2026-GRP/GRI-S</span>
-                            <p style="font-size:0.9rem; margin-top: 6px;"><strong>Análisis Normativo:</strong> El bien existe en el catálogo y al tener un monto programado <strong>mayor a S/ 1,000</strong>, la ley exige su compra obligatoria por Catálogos Electrónicos (Perú Compras), sin importar si es menor o mayor a 8 UIT.</p>
-                            <p style="font-size:0.9rem; margin-top: 6px;"><strong>Solución:</strong> El Residente elaboró el Informe Técnico sustentando la "Identidad Técnica Absoluta" y el Supervisor aprobó con Memorándum para adecuar la denominación exacta a la ficha homologada sin alterar las metas físicas del proyecto.</p>
-                            <div class="table-responsive">
-                                <table class="normative-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Origen (Exp. Mod 03)</th>
-                                            <th>Condición</th>
-                                            <th>Denominación Oficial Obligatoria (Perú Compras)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td style="color:#ef4444; font-weight:bold;">Asfalto RC - 250</td>
-                                            <td><strong>S/. 5,250.00</strong> (&gt; S/ 1,000)</td>
-                                            <td style="color:#166534; font-weight:bold;">ASFALTO LÍQUIDO CUT BACK RC-250 (CURADO RÁPIDO GRADO RC-250)</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="example-card">
-                            <h3>Caso Exclusión: Monto Menor o Igual a S/ 1,000</h3>
-                            <p style="font-size:0.9rem;"><strong>Regla:</strong> Si un bien figura en la Ficha Técnica OSCE o Perú Compras, pero su monto referencial es de <strong>S/ 1,000 o menos</strong>, el sistema no lo procesa obligatoriamente por el Acuerdo Marco.</p>
-                            <p style="font-size:0.9rem; margin-top: 6px;"><strong>Flujo:</strong> Sale de la obligatoriedad electrónica y se tramita como compra menor regular directa, evitando el rigor de homologación estricta de la etiqueta y agilizando la adquisición.</p>
-                        </div>
-
-                        <div class="example-card">
-                            <h3>Caso Programación Directa (Ruta Normal)</h3>
-                            <span class="doc-ref">📄 ANEXO Nº 03</span>
-                            <p style="font-size:0.9rem; margin-top: 6px;"><strong>Contexto:</strong> Insumos que no varían de nombre y cuyas cantidades y unidades coinciden al 100% con el Presupuesto Analítico del expediente técnico. Se validan directamente con el Anexo 03 sin requerir informes aclaratorios.</p>
-                            <div class="table-responsive">
-                                <table class="normative-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Clasificador</th>
-                                            <th>Descripción Aprobada</th>
-                                            <th>Unidad</th>
-                                            <th>Valor Total S/</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>2.6.2.2.2.4</td>
-                                            <td>CONCRETO PREMEZCLADO 280 KG/CM² CON CEMENTO TIPO IP</td>
-                                            <td>M3</td>
-                                            <td>S/. 5,250.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2.6.3.2.2.1</td>
-                                            <td>TRANSFORMADOR DE AISLAMIENTO 40KVA</td>
-                                            <td>UNIDAD</td>
-                                            <td>S/. 5,000.00</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
-            <!-- TAB 3: HELP AND DOCUMENTATION -->
+            <!-- TAB 3: REAL-WORLD CASE STUDY EXAMPLES -->
             <div id="tab-ayuda" class="tab-pane">
                 <div class="normative-card">
                     <div class="normative-header">
-                        <i data-lucide="help-circle" style="width: 28px; height: 28px; color: var(--primary);"></i>
-                        <h3>Manual de Ayuda, Instalación y Operación</h3>
+                        <i data-lucide="book-open" style="width: 28px; height: 28px; color: var(--primary);"></i>
+                        <h3>Casos Prácticos de Obra - ISTP Cabanillas</h3>
                     </div>
-                    
-                    <div style="display: flex; flex-direction: column; gap: 20px; font-size: 0.95rem;">
-                        <!-- PERSISTENCE AND DEPLOYMENT -->
-                        <div>
-                            <h4 style="color: var(--primary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-                                <i data-lucide="globe" style="width:18px; height:18px;"></i>
-                                🌐 Despliegue en Internet (Fuera de la Red Local)
-                            </h4>
-                            <p>Para utilizar la aplicación en celulares desde cualquier ubicación sin depender de una red local, la app debe alojarse en un servidor con HTTPS público. Al tratarse de una base de datos basada en archivos, se recomiendan dos opciones gratuitas y persistentes:</p>
-                            <ul style="margin-left: 20px; margin-top: 8px; display: flex; flex-direction: column; gap: 5px;">
-                                <li><strong>Opción A: PythonAnywhere (Recomendado)</strong>: Crea una cuenta gratuita en <a href="https://www.pythonanywhere.com/" target="_blank" style="color:var(--primary); text-decoration:underline;">pythonanywhere.com</a>, sube los archivos en la pestaña <em>Files</em> y configura una Web App manual. Activa <strong>Force HTTPS</strong> en la configuración de la web.</li>
-                                <li><strong>Opción B: Render.com</strong>: Sube el proyecto a un repositorio privado de GitHub, conéctalo a un servicio web de Python en Render y monta un disco persistente (Disk Volume) para que el archivo <code>requerimientos.json</code> retenga los comentarios.</li>
-                            </ul>
-                        </div>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
+                        Ejemplos aplicados de adecuación normativas basados en las fichas OSCE y Perú Compras para la obra: <em>"Mejoramiento de los Servicios de Educación Superior del ISTP Cabanillas"</em>.
+                    </p>
 
-                        <!-- INSTALLATION MANUAL -->
-                        <div style="border-top: 1px solid var(--border-light); padding-top: 20px;">
-                            <h4 style="color: var(--primary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-                                <i data-lucide="smartphone" style="width:18px; height:18px;"></i>
-                                📱 Instalación como App en tu Celular (PWA)
-                            </h4>
-                            <p>Cuando la app esté alojada en un servidor HTTPS, puedes instalarla en tu pantalla de inicio como una aplicación nativa:</p>
-                            <ul style="margin-left: 20px; margin-top: 8px; display: flex; flex-direction: column; gap: 6px;">
-                                <li><strong>En Android (Chrome / Edge)</strong>: Presiona el botón amarillo con animación de latido <strong>"Instalar App"</strong> en el encabezado de la web y confirma. O abre el menú del navegador y selecciona <em>"Instalar aplicación"</em>.</li>
-                                <li><strong>En iPhone / iOS (Safari)</strong>: Abre la app en Safari, presiona el botón <strong>Compartir</strong> (icono de cuadrado con flecha hacia arriba) y selecciona <strong>"Añadir a la pantalla de inicio"</strong>.</li>
-                            </ul>
+                    <div class="example-card peru-compras">
+                        <h3>Caso Asfalto: Adecuación por Catálogo Electrónico</h3>
+                        <span class="doc-ref">📄 INFORME Nº 030-2026-GRP/GRI-RO</span>
+                        <span class="doc-ref">📄 MEMORANDUM N°030-2026-GRP/GRI-S</span>
+                        <p style="font-size: 0.9rem; margin-top: 6px;"><strong>Análisis Normativo:</strong> El bien existe en catálogo y al tener un monto programado <strong>mayor a S/ 1,000</strong>, la ley exige su compra obligatoria por Catálogos Electrónicos (Perú Compras), sin importar si es menor o mayor a 8 UIT.</p>
+                        <p style="font-size: 0.9rem; margin-top: 6px;"><strong>Solución:</strong> El Residente de Obra elaboró el Informe Técnico sustentando la "Identidad Técnica Absoluta" y el Supervisor aprobó con Memorándum para adecuar la denominación exacta a la ficha homologada de Perú Compras sin alterar las metas físicas del proyecto.</p>
+                        <div class="table-responsive">
+                            <table class="normative-table">
+                                <thead>
+                                    <tr>
+                                        <th>Origen (Exp. Mod 03)</th>
+                                        <th>Condición</th>
+                                        <th>Denominación Oficial Obligatoria (Perú Compras)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="color:#ef4444; font-weight:bold;">Asfalto RC - 250</td>
+                                        <td><strong>S/. 5,250.00</strong> (&gt; S/ 1,000)</td>
+                                        <td style="color:#166534; font-weight:bold;">ASFALTO LÍQUIDO CUT BACK RC-250 (CURADO RÁPIDO GRADO RC-250)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        
-                        <!-- PRINT INSTRUCTIONS -->
-                        <div style="border-top: 1px solid var(--border-light); padding-top: 20px;">
-                            <h4 style="color: var(--primary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-                                <i data-lucide="printer" style="width:18px; height:18px;"></i>
-                                🖨️ Ficha de Impresión A4 Horizontal (Para Reuniones)
-                            </h4>
-                            <p>Para llevar un resumen físico o digital (PDF) de un requerimiento a comités técnicos y reuniones de coordinación:</p>
-                            <ol style="margin-left: 20px; margin-top: 8px; display: flex; flex-direction: column; gap: 5px;">
-                                <li>Abre el detalle del requerimiento haciendo clic en <strong>Ver</strong>.</li>
-                                <li>Presiona el botón **"Imprimir A4"** en la esquina inferior izquierda.</li>
-                                <li>En las opciones de la impresora: selecciona **Orientación Horizontal (Landscape)**, tamaño **A4** y activa la casilla **"Imprimir gráficos de fondo"** para no perder el color de los estados.</li>
-                                <li>Si deseas compartirlo por WhatsApp, elige **"Guardar como PDF"** en la lista de impresoras.</li>
-                            </ol>
-                        </div>
+                    </div>
 
-                        <!-- ROLES AND RULES -->
-                        <div style="border-top: 1px solid var(--border-light); padding-top: 20px;">
-                            <h4 style="color: var(--primary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-                                <i data-lucide="users" style="width:18px; height:18px;"></i>
-                                👥 Roles de Usuario y Sincronización Automática
-                            </h4>
-                            <ul style="margin-left: 20px; margin-top: 8px; display: flex; flex-direction: column; gap: 8px;">
-                                <li><strong>Residente (<code>residente1</code> / <code>residente123</code>)</strong>: Escribe y reporta comentarios de obra en el campo amarillo <em>"COMENTARIOS RESIDENCIA"</em>.</li>
-                                <li><strong>Administración (<code>admin</code> / <code>admin123</code>)</strong>: Controla los montos, cambia los pasos del 1 al 10 en la línea de tiempo y registra observaciones en oficina.</li>
-                                <li><strong>Sincronización Inteligente</strong>: Cada vez que se edita el formulario, el sistema almacena el cambio en la base de datos y agrega una copia firmada en la <strong>Bitácora de Comentarios</strong> para mantener el historial.</li>
+                    <div class="example-card" style="margin-top: 20px;">
+                        <h3>Caso Exclusión: Monto Menor o Igual a S/ 1,000</h3>
+                        <p style="font-size: 0.9rem;"><strong>Regla:</strong> Si un bien figura en la Ficha Técnica OSCE o Perú Compras, pero su monto referencial es de <strong>S/ 1,000 o menos</strong>, la normativa no exige obligatoriamente tramitarlo por el Acuerdo Marco.</p>
+                        <p style="font-size: 0.9rem; margin-top: 6px;"><strong>Flujo de Compra:</strong> Se excluye del catálogo electrónico y se tramita directamente como adquisición regular menor (evitando la homologación formal de la etiqueta y acelerando el proceso de compra menor en la obra).</p>
+                    </div>
+
+                    <div class="example-card" style="margin-top: 20px;">
+                        <h3>Caso Programación Directa (Ruta Normal)</h3>
+                        <span class="doc-ref">📄 ANEXO Nº 03</span>
+                        <p style="font-size: 0.9rem; margin-top: 6px;"><strong>Contexto:</strong> Materiales que coinciden de manera exacta en nombre, unidad y cantidad con el Presupuesto Analítico del Expediente de Obra. Pasan de manera directa.</p>
+                        <div class="table-responsive">
+                            <table class="normative-table">
+                                <thead>
+                                    <tr>
+                                        <th>Clasificador</th>
+                                        <th>Descripción Aprobada</th>
+                                        <th>Unidad</th>
+                                        <th>Valor Total S/</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2.6.2.2.2.4</td>
+                                        <td>CONCRETO PREMEZCLADO 280 KG/CM² CON CEMENTO TIPO IP</td>
+                                        <td>M3</td>
+                                        <td>S/. 5,250.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2.6.3.2.2.1</td>
+                                        <td>TRANSFORMADOR DE AISLAMIENTO 40KVA</td>
+                                        <td>UNIDAD</td>
+                                        <td>S/. 5,000.00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>a en la <strong>Bitácora de Comentarios</strong> para mantener el historial.</li>
                             </ul>
                         </div>
                     </div>
@@ -2235,6 +2162,12 @@
                             <div class="timeline-tooltip">Paso 10: Trámite Concluido / Entrega</div>
                         </div>
                     </div>
+                </div>
+
+                <!-- A4 Print Notification Banner -->
+                <div class="print-notification-banner" style="background-color: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 10px 14px; border-radius: 6px; font-size: 0.82rem; display: flex; align-items: center; gap: 8px; margin-bottom: 15px; font-weight: 600;">
+                    <i data-lucide="printer" style="width: 16px; height: 16px; flex-shrink: 0; color: #15803d;"></i>
+                    <span>¿Deseas imprimir o exportar esta ficha? Haz clic en el botón <strong>"Imprimir A4"</strong> ubicado en el pie de esta ventana para generar un resumen optimizado para hojas A4 en formato horizontal.</span>
                 </div>
 
                 <!-- READ ONLY VIEWER PANEL -->
@@ -2475,6 +2408,7 @@
     </div>
 
     <!-- MAIN LOGIC (importing data and running app) -->
+    <script src="users_config.js"></script>
     <script src="initial_data.js"></script>
     <script>
         // CONFIGURACIÓN DE BASE DE DATOS (Servidor Local o Nube)
@@ -2486,14 +2420,8 @@
         // Check if data loaded correctly from initial_data.js, else fallback to empty array
         let requirements = [];
         
-        // Define users and roles
-        const users = {
-            'admin': { role: 'admin', name: 'Administrador General', username: 'admin' },
-            'asistente1': { role: 'admin', name: 'Asistente Administrativo 1', username: 'asistente1' },
-            'asistente2': { role: 'admin', name: 'Asistente Administrativo 2', username: 'asistente2' },
-            'tecnico1': { role: 'admin', name: 'Asistente Técnico', username: 'tecnico1' },
-            'residente1': { role: 'residente', name: 'Residente de Obra', username: 'residente1' }
-        };
+        // Define users and roles from external configuration
+        const users = typeof OBRA_USERS !== 'undefined' ? OBRA_USERS : {};
 
         let currentUser = null; // null means guest/publico
 
@@ -2620,7 +2548,7 @@
             
             const userObj = users[userIn];
             
-            if (userObj && (passIn === 'req2026' || (userIn === 'admin' && passIn === 'admin123') || (userIn === 'residente1' && passIn === 'residente123'))) {
+            if (userObj && passIn === userObj.password) {
                 currentUser = userObj;
                 sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
                 applyUserRoleUI();
