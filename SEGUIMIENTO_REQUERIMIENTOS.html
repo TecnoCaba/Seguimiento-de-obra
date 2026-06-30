@@ -1591,6 +1591,9 @@
                     <i data-lucide="user" style="width: 14px; height: 14px;"></i>
                     <span id="currentUserName">Público / Invitado</span>
                 </div>
+                <button class="logout-btn" id="btnChangePassword" onclick="openChangePasswordModal()" title="Cambiar Contraseña" style="display: none; background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 6px; transition: color 0.2s ease; margin-right: 5px;">
+                    <i data-lucide="key" style="width: 20px; height: 20px;"></i>
+                </button>
                 <button class="logout-btn" onclick="logout()" title="Cerrar sesión">
                     <i data-lucide="log-out" style="width: 20px; height: 20px;"></i>
                 </button>
@@ -2412,6 +2415,37 @@
         </div>
     </div>
 
+    <!-- CHANGE PASSWORD MODAL -->
+    <div class="modal" id="changePasswordModal">
+        <div class="modal-content" style="max-width: 400px; border-top: 4px solid var(--primary);">
+            <div class="modal-header">
+                <h3>Cambiar Contraseña</h3>
+                <button class="modal-close" onclick="closeChangePasswordModal()">
+                    <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+                </button>
+            </div>
+            <div class="modal-body" style="padding: 20px;">
+                <div class="form-group">
+                    <label for="currentPassword">Contraseña Actual</label>
+                    <input type="password" id="currentPassword" class="form-control" required placeholder="Contraseña actual">
+                </div>
+                <div class="form-group" style="margin-top: 15px;">
+                    <label for="newPassword">Nueva Contraseña</label>
+                    <input type="password" id="newPassword" class="form-control" required placeholder="Mínimo 4 caracteres">
+                </div>
+                <div class="form-group" style="margin-top: 15px;">
+                    <label for="confirmNewPassword">Confirmar Nueva Contraseña</label>
+                    <input type="password" id="confirmNewPassword" class="form-control" required placeholder="Repita la nueva contraseña">
+                </div>
+                <div id="changePasswordAlert" style="display: none; margin-top: 15px; padding: 10px; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 600;"></div>
+            </div>
+            <div class="modal-footer" style="padding: 15px 20px; display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="btn btn-secondary" onclick="closeChangePasswordModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="submitChangePassword()">Actualizar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- MAIN LOGIC (importing data and running app) -->
     <script src="users_config.js"></script>
     <script src="initial_data.js"></script>
@@ -2422,11 +2456,22 @@
         //   Reemplaza por tu URL de Firebase, ej: "https://mi-proyecto-default-rtdb.firebaseio.com/requirements.json"
         const DATABASE_URL = "https://cabanillas-3d603-default-rtdb.firebaseio.com/";
 
+        // Autocuración y limpieza de URL de base de datos
+        let reqDbUrl = DATABASE_URL;
+        if (DATABASE_URL.includes('firebaseio.com') && !DATABASE_URL.endsWith('requirements.json')) {
+            reqDbUrl = DATABASE_URL.endsWith('/') ? DATABASE_URL + 'requirements.json' : DATABASE_URL + '/requirements.json';
+        }
+        
+        let usersDbUrl = "";
+        if (reqDbUrl.includes('firebaseio.com')) {
+            usersDbUrl = reqDbUrl.replace('requirements.json', 'users.json');
+        }
+
         // Check if data loaded correctly from initial_data.js, else fallback to empty array
         let requirements = [];
         
         // Define users and roles (Fallback to defaults if users_config.js is missing or fails to load)
-        const users = typeof OBRA_USERS !== 'undefined' ? OBRA_USERS : {
+        let users = typeof OBRA_USERS !== 'undefined' ? OBRA_USERS : {
             'admin': { role: 'admin', name: 'Administrador General', username: 'admin', password: 'admin123' },
             'asistente1': { role: 'admin', name: 'Asistente Administrativo 1', username: 'asistente1', password: 'req2026' },
             'asistente2': { role: 'admin', name: 'Asistente Administrativo 2', username: 'asistente2', password: 'req2026' },
@@ -2461,10 +2506,34 @@
                     .catch(err => console.warn('Service Worker registration failed.', err));
             }
             
+            // Try loading users database from cloud if available
+            if (usersDbUrl) {
+                try {
+                    const resUsers = await fetch(usersDbUrl);
+                    if (resUsers.ok) {
+                        const cloudUsers = await resUsers.json();
+                        if (cloudUsers && typeof cloudUsers === 'object' && Object.keys(cloudUsers).length > 0) {
+                            users = cloudUsers;
+                            console.log("Loaded user accounts from cloud database.");
+                        } else {
+                            // If empty, initialize Firebase with default credentials
+                            await fetch(usersDbUrl, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(users)
+                            });
+                            console.log("Initialized cloud user accounts with defaults.");
+                        }
+                    }
+                } catch (err) {
+                    console.warn("Could not load users from cloud database, using defaults:", err);
+                }
+            }
+            
             // Try loading from database first
             let loadedFromServer = false;
             try {
-                const response = await fetch(DATABASE_URL);
+                const response = await fetch(reqDbUrl);
                 if (response.ok) {
                     const data = await response.json();
                     if (data && typeof data === 'object') {
@@ -2530,11 +2599,11 @@
             try {
                 let method = 'POST';
                 // If using Firebase, the REST API expects a PUT request to overwrite the array
-                if (DATABASE_URL.includes('firebaseio.com')) {
+                if (reqDbUrl.includes('firebaseio.com')) {
                     method = 'PUT';
                 }
                 
-                const response = await fetch(DATABASE_URL, {
+                const response = await fetch(reqDbUrl, {
                     method: method,
                     headers: {
                         'Content-Type': 'application/json; charset=utf-8'
@@ -2608,30 +2677,112 @@
         function applyUserRoleUI() {
             const userNameEl = document.getElementById('currentUserName');
             const userBadgeEl = document.getElementById('currentUserBadge');
+            const btnChangePassword = document.getElementById('btnChangePassword');
             
             // Elements to show/hide based on roles
             const btnNewReq = document.getElementById('btnNewReq');
-            const btnImport = document.getElementById('btnImport');
             
             userBadgeEl.className = 'user-badge';
             
             if (currentUser) {
                 userNameEl.textContent = currentUser.name;
+                if (btnChangePassword) btnChangePassword.style.display = 'inline-flex';
                 
                 if (currentUser.role === 'admin') {
                     userBadgeEl.classList.add('role-admin');
-                    btnNewReq.style.display = 'inline-flex';
-                    btnImport.style.display = 'inline-flex';
+                    if (btnNewReq) btnNewReq.style.display = 'inline-flex';
                 } else if (currentUser.role === 'residente') {
                     userBadgeEl.classList.add('role-residente');
-                    btnNewReq.style.display = 'none';
-                    btnImport.style.display = 'none';
+                    if (btnNewReq) btnNewReq.style.display = 'none';
                 }
             } else {
                 userNameEl.textContent = "Público / Invitado";
                 userBadgeEl.classList.add('role-publico');
-                btnNewReq.style.display = 'none';
-                btnImport.style.display = 'none';
+                if (btnChangePassword) btnChangePassword.style.display = 'none';
+                if (btnNewReq) btnNewReq.style.display = 'none';
+            }
+        }
+
+        function openChangePasswordModal() {
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmNewPassword').value = '';
+            const alertBox = document.getElementById('changePasswordAlert');
+            alertBox.style.display = 'none';
+            
+            document.getElementById('changePasswordModal').classList.add('active');
+            lucide.createIcons();
+        }
+        
+        function closeChangePasswordModal() {
+            document.getElementById('changePasswordModal').classList.remove('active');
+        }
+        
+        async function submitChangePassword() {
+            const currentPass = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmNewPassword').value;
+            const alertBox = document.getElementById('changePasswordAlert');
+            
+            if (!currentUser) return;
+            
+            if (currentPass !== currentUser.password) {
+                alertBox.textContent = "La contraseña actual es incorrecta.";
+                alertBox.style.backgroundColor = "#fee2e2";
+                alertBox.style.color = "#991b1b";
+                alertBox.style.display = "block";
+                return;
+            }
+            
+            if (newPass.length < 4) {
+                alertBox.textContent = "La nueva contraseña debe tener al menos 4 caracteres.";
+                alertBox.style.backgroundColor = "#fee2e2";
+                alertBox.style.color = "#991b1b";
+                alertBox.style.display = "block";
+                return;
+            }
+            
+            if (newPass !== confirmPass) {
+                alertBox.textContent = "Las nuevas contraseñas no coinciden.";
+                alertBox.style.backgroundColor = "#fee2e2";
+                alertBox.style.color = "#991b1b";
+                alertBox.style.display = "block";
+                return;
+            }
+            
+            try {
+                // Update local configuration
+                users[currentUser.username].password = newPass;
+                currentUser.password = newPass;
+                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Sync with cloud users.json if available
+                if (usersDbUrl) {
+                    const response = await fetch(usersDbUrl, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(users)
+                    });
+                    if (!response.ok) throw new Error("Sync failed");
+                    console.log("Password synchronized with cloud database.");
+                }
+                
+                alertBox.textContent = "¡Contraseña actualizada con éxito!";
+                alertBox.style.backgroundColor = "#dcfce3";
+                alertBox.style.color = "#15803d";
+                alertBox.style.display = "block";
+                
+                setTimeout(() => {
+                    closeChangePasswordModal();
+                }, 1500);
+            } catch (err) {
+                console.error("Error changing password:", err);
+                alertBox.textContent = "Error de sincronización con la base de datos.";
+                alertBox.style.backgroundColor = "#fee2e2";
+                alertBox.style.color = "#991b1b";
+                alertBox.style.display = "block";
             }
         }
 
