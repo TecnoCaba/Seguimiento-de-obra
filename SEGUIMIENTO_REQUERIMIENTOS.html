@@ -1048,6 +1048,98 @@
         }
 
         @media (max-width: 768px) {
+            /* Reset base elements to lock horizontal scroll at body level */
+            html, body {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            /* Header responsive adjustments */
+            .app-header {
+                padding: 10px 15px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .brand-section {
+                flex: 1 1 auto;
+                gap: 8px;
+            }
+            .brand-logo {
+                width: 32px;
+                height: 32px;
+            }
+            .brand-logo i {
+                width: 18px !important;
+                height: 18px !important;
+            }
+            .brand-text h1 {
+                font-size: 1.05rem;
+            }
+            .brand-text p {
+                display: none !important; /* Hide long subtitle on mobile */
+            }
+            .user-profile {
+                flex: 0 0 auto;
+                gap: 8px;
+            }
+            .user-badge {
+                padding: 4px 8px;
+                font-size: 0.75rem;
+            }
+
+            /* Scrollable tabs bar */
+            .app-tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                display: flex;
+                gap: 5px;
+                scrollbar-width: none;
+                margin-bottom: 15px;
+                border-bottom: 1px solid var(--border-light);
+            }
+            .app-tabs::-webkit-scrollbar {
+                display: none;
+            }
+            .tab-btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+                flex-shrink: 0;
+            }
+
+            /* Main content spacing */
+            .main-content {
+                padding: 15px;
+            }
+
+            /* Metrics dashboard stacking */
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+            .metric-card {
+                padding: 12px;
+                gap: 10px;
+            }
+            .metric-card .metric-info h3 {
+                font-size: 1.2rem;
+            }
+            .metric-card .metric-info p {
+                font-size: 0.7rem;
+            }
+
+            /* Actions and filters stacking */
+            .actions-panel .search-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .filters-row {
+                grid-template-columns: 1fr !important;
+                gap: 10px;
+                padding-top: 10px;
+            }
+
+            /* Grid detail columns and timeline */
             .detail-grid {
                 grid-template-columns: 1fr;
             }
@@ -1064,8 +1156,19 @@
             .timeline-track {
                 display: none;
             }
-            .actions-panel .search-row {
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .app-header {
                 flex-direction: column;
+                align-items: stretch;
+            }
+            .user-profile {
+                justify-content: flex-end;
+                width: 100%;
             }
         }
 
