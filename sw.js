@@ -1,4 +1,4 @@
-const CACHE_NAME = 'req-tracker-cache-v5';
+const CACHE_NAME = 'req-tracker-cache-v6';
 const ASSETS = [
   './index.html',
   './users_config.js',

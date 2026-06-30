@@ -2653,11 +2653,28 @@
         window.addEventListener('DOMContentLoaded', async () => {
             lucide.createIcons();
             
-            // Register PWA Service Worker
+            // Register PWA Service Worker with automatic updates detection
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('Service Worker registered successfully.', reg))
-                    .catch(err => console.warn('Service Worker registration failed.', err));
+                navigator.serviceWorker.register('./sw.js').then(reg => {
+                    console.log('Service Worker registered successfully.', reg);
+                    
+                    // Force update check
+                    reg.update();
+                    
+                    reg.onupdatefound = () => {
+                        const installingWorker = reg.installing;
+                        if (installingWorker) {
+                            installingWorker.onstatechange = () => {
+                                if (installingWorker.state === 'installed') {
+                                    if (navigator.serviceWorker.controller) {
+                                        console.log('New update found! Reloading page...');
+                                        window.location.reload();
+                                    }
+                                }
+                            };
+                        }
+                    };
+                }).catch(err => console.warn('Service Worker registration failed.', err));
             }
             
             // Try loading users database from cloud if available
