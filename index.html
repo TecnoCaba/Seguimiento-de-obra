@@ -1548,7 +1548,12 @@
                 
                 <div class="form-group">
                     <label for="password">Contraseña</label>
-                    <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+                    <div style="position: relative; display: flex; align-items: center;">
+                        <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password" style="padding-right: 40px; width: 100%;">
+                        <button type="button" onclick="togglePasswordVisibility()" style="position: absolute; right: 12px; background: none; border: none; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; justify-content: center; padding: 0;" title="Mostrar/Ocultar Contraseña">
+                            <i data-lucide="eye" id="passwordToggleIcon" style="width: 18px; height: 18px;"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <button type="submit" class="login-btn">Iniciar Sesión</button>
@@ -2420,8 +2425,14 @@
         // Check if data loaded correctly from initial_data.js, else fallback to empty array
         let requirements = [];
         
-        // Define users and roles from external configuration
-        const users = typeof OBRA_USERS !== 'undefined' ? OBRA_USERS : {};
+        // Define users and roles (Fallback to defaults if users_config.js is missing or fails to load)
+        const users = typeof OBRA_USERS !== 'undefined' ? OBRA_USERS : {
+            'admin': { role: 'admin', name: 'Administrador General', username: 'admin', password: 'admin123' },
+            'asistente1': { role: 'admin', name: 'Asistente Administrativo 1', username: 'asistente1', password: 'req2026' },
+            'asistente2': { role: 'admin', name: 'Asistente Administrativo 2', username: 'asistente2', password: 'req2026' },
+            'tecnico1': { role: 'admin', name: 'Asistente Técnico', username: 'tecnico1', password: 'req2026' },
+            'residente1': { role: 'residente', name: 'Residente de Obra', username: 'residente1', password: 'residente123' }
+        };
 
         let currentUser = null; // null means guest/publico
 
@@ -2565,6 +2576,19 @@
                 document.getElementById('loginAlertText').textContent = "Usuario o contraseña incorrectos.";
                 alertBox.style.display = 'flex';
             }
+        }
+
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('passwordToggleIcon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.setAttribute('data-lucide', 'eye');
+            }
+            lucide.createIcons();
         }
 
         function loginAsGuest() {
