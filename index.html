@@ -1490,10 +1490,10 @@
             body * {
                 visibility: hidden;
             }
-            #printSummaryContainer, #printSummaryContainer * {
+            #printSummaryContainer, #printSummaryContainer *, #printAllSummaryContainer, #printAllSummaryContainer * {
                 visibility: visible;
             }
-            #printSummaryContainer {
+            #printSummaryContainer, #printAllSummaryContainer {
                 position: absolute;
                 left: 0;
                 top: 0;
@@ -1554,6 +1554,13 @@
                             <i data-lucide="eye" id="passwordToggleIcon" style="width: 18px; height: 18px;"></i>
                         </button>
                     </div>
+                </div>
+                
+                <div class="form-group" style="display: flex; align-items: center; gap: 8px; margin-top: 10px; margin-bottom: 15px;">
+                    <input type="checkbox" id="rememberMe" style="width: 16px; height: 16px; cursor: pointer;">
+                    <label for="rememberMe" style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer; margin-bottom: 0; user-select: none;">
+                        Mantener mi sesión iniciada en este dispositivo
+                    </label>
                 </div>
 
                 <button type="submit" class="login-btn">Iniciar Sesión</button>
@@ -1676,6 +1683,9 @@
                                 <i data-lucide="plus-circle" style="width: 18px; height: 18px;"></i> Nuevo Req.
                             </button>
 
+                            <button class="btn btn-secondary" onclick="printAllRequirements()" title="Imprimir listado resumen de todos los requerimientos en A4 Horizontal" style="display: inline-flex; align-items: center; gap: 6px;">
+                                <i data-lucide="printer" style="width: 18px; height: 18px;"></i> Imprimir Resumen Gral.
+                            </button>
                             <button class="btn btn-danger" onclick="resetToDefaults()" title="Restaurar base de datos a su estado inicial desde Excel">
                                 <i data-lucide="rotate-ccw" style="width: 18px; height: 18px;"></i> Reiniciar
                             </button>
@@ -2572,8 +2582,8 @@
             // Migrate old comments to bitacora if necessary
             migrateOldComments();
 
-            // Restore user session if saved in sessionStorage
-            const sessionUser = sessionStorage.getItem('currentUser');
+            // Restore user session if saved in sessionStorage or localStorage
+            const sessionUser = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser');
             if (sessionUser) {
                 currentUser = JSON.parse(sessionUser);
                 applyUserRoleUI();
@@ -2625,12 +2635,19 @@
             e.preventDefault();
             const userIn = document.getElementById('username').value.trim();
             const passIn = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
             
             const userObj = users[userIn];
             
             if (userObj && passIn === userObj.password) {
                 currentUser = userObj;
-                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                if (rememberMe) {
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    sessionStorage.removeItem('currentUser');
+                } else {
+                    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    localStorage.removeItem('currentUser');
+                }
                 applyUserRoleUI();
                 
                 // Hide login overlay
@@ -2663,6 +2680,7 @@
         function loginAsGuest() {
             currentUser = null;
             sessionStorage.removeItem('currentUser');
+            localStorage.removeItem('currentUser');
             applyUserRoleUI();
             document.getElementById('loginOverlay').classList.add('hidden');
         }
@@ -2670,6 +2688,7 @@
         function logout() {
             currentUser = null;
             sessionStorage.removeItem('currentUser');
+            localStorage.removeItem('currentUser');
             applyUserRoleUI();
             document.getElementById('loginOverlay').classList.remove('hidden');
         }
@@ -4100,6 +4119,151 @@
             window.print();
         }
 
+        function printAllRequirements() {
+            // Sort requirements: 1. seace, 2. menor_8_uit, 3. peru_compras
+            const sortedReqs = [...requirements].sort((a, b) => {
+                const order = { 'seace': 1, 'menor_8_uit': 2, 'peru_compras': 3 };
+                const valA = order[a.ruta] || 4;
+                const valB = order[b.ruta] || 4;
+                if (valA !== valB) return valA - valB;
+                return a.id - b.id;
+            });
+            
+            const container = document.getElementById('printAllSummaryContainer');
+            if (!container) return;
+            
+            let html = `
+                <div style="font-family: 'Segoe UI', system-ui, sans-serif; color: #1e293b; padding: 15px; width: 100%; background-color: white;">
+                    <!-- Header with GRP crest / text -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 10px; margin-bottom: 20px;">
+                        <div>
+                            <h2 style="font-size: 1.3rem; font-weight: 800; color: #1e3a8a; margin: 0; text-transform: uppercase; font-family: sans-serif;">
+                                GOBIERNO REGIONAL DE PUNO
+                            </h2>
+                            <p style="font-size: 0.8rem; color: #64748b; margin: 2px 0 0 0; font-weight: 600;">
+                                Gerencia Regional de Infraestructura | OASA
+                            </p>
+                        </div>
+                        <div style="text-align: right;">
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0; font-family: sans-serif;">
+                                REPORTE GENERAL DE SEGUIMIENTO DE REQUERIMIENTOS
+                            </h3>
+                            <p style="font-size: 0.75rem; color: #64748b; margin: 2px 0 0 0;">
+                                Obra: ISTP Cabanillas | Fecha: ${new Date().toLocaleDateString('es-PE')}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- General Stats Summary Row -->
+                    <div style="display: flex; gap: 15px; margin-bottom: 15px; font-size: 0.8rem; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px;">
+                        <div><strong>Total Requerimientos:</strong> ${sortedReqs.length}</div>
+                        <div><strong>En Curso:</strong> ${sortedReqs.filter(r => r.Estado === 'En curso').length}</div>
+                        <div><strong>Bloqueados:</strong> ${sortedReqs.filter(r => r.Estado === 'Bloqueado').length}</div>
+                        <div><strong>Sin Comenzar:</strong> ${sortedReqs.filter(r => r.Estado === 'Sin comenzar').length}</div>
+                        <div style="margin-left: auto;"><strong>Presupuesto General Acumulado:</strong> S/. ${sortedReqs.reduce((sum, r) => sum + (parseFloat(r.MONTO) || 0), 0).toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                    </div>
+
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.78rem;">
+                        <thead>
+                            <tr style="background-color: #1e3a8a; color: white; text-align: left;">
+                                <th style="border: 1px solid #cbd5e1; padding: 6px 8px; width: 60px;">N° Req</th>
+                                <th style="border: 1px solid #cbd5e1; padding: 6px 8px; width: 120px;">Ruta / Tipo</th>
+                                <th style="border: 1px solid #cbd5e1; padding: 6px 8px; width: 110px;">Especialidad</th>
+                                <th style="border: 1px solid #cbd5e1; padding: 6px 8px;">Descripción del Bien / Servicio</th>
+                                <th style="border: 1px solid #cbd5e1; padding: 6px 8px; width: 100px; text-align: right;">Monto (S/.)</th>
+                                <th style="border: 1px solid #cbd5e1; padding: 6px 8px; width: 90px; text-align: center;">Paso Actual</th>
+                                <th style="border: 1px solid #cbd5e1; padding: 6px 8px; width: 90px; text-align: center;">Estado</th>
+                                <th style="border: 1px solid #cbd5e1; padding: 6px 8px; width: 140px;">Ubicación / Observación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            sortedReqs.forEach(r => {
+                let rutaLabel = "";
+                let rutaColor = "";
+                if (r.ruta === 'seace') {
+                    rutaLabel = "Grandes (SEACE)";
+                    rutaColor = "#1e3a8a";
+                } else if (r.ruta === 'menor_8_uit') {
+                    rutaLabel = "Menor 8 UIT";
+                    rutaColor = "#ca8a04";
+                } else if (r.ruta === 'peru_compras') {
+                    rutaLabel = "Perú Compras";
+                    rutaColor = "#16a34a";
+                }
+                
+                let estadoLabel = r.Estado || "Sin comenzar";
+                let estadoBg = "#f1f5f9";
+                let estadoColor = "#475569";
+                if (r.Estado === 'En curso') {
+                    estadoBg = "#dcfce3";
+                    estadoColor = "#15803d";
+                } else if (r.Estado === 'Bloqueado') {
+                    estadoBg = "#fee2e2";
+                    estadoColor = "#991b1b";
+                }
+                
+                const stepNames = {
+                    'seace': ["1.PROG", "2.ADMI", "3.ESTU", "4.APRO", "5.INTE", "6.DOCU", "7.APRO", "8.SEAC", "9.BUEN", "10.TRAM"],
+                    'menor_8_uit': ["1.PROG", "2.ADMI", "3.J-COTI", "4.J-COTI", "5.COTI", "6.COTI", "7.OASA", "8.OASA", "9.OASA", "10.TRAM"],
+                    'peru_compras': ["1.PROG", "2.ADMI", "3.PC-CO", "4.PC-PR", "5.PC-EM", "6.PC-SE", "7.OASA", "8.OASA", "9.OASA", "10.TRAM"]
+                };
+                const routeSteps = stepNames[r.ruta] || stepNames['menor_8_uit'];
+                const stepNum = parseInt(r.paso_actual) || 1;
+                const stepLabel = routeSteps[stepNum - 1] || `${stepNum}/10`;
+
+                html += `
+                    <tr style="border-bottom: 1px solid #e2e8f0; height: 32px;">
+                        <td style="border: 1px solid #cbd5e1; padding: 5px 8px; font-weight: bold; text-align: center;">${r.REQUERIMIENTO || r.id}</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 5px 8px; font-weight: bold; color: ${rutaColor};">${rutaLabel}</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 5px 8px; text-transform: uppercase;">${r.Propietario || "-"}</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 5px 8px; font-weight: 500;">${r.descripcion_completa || r.REQUERIMIENTO || "-"}</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 5px 8px; text-align: right; font-weight: bold;">S/. ${(parseFloat(r.MONTO) || 0).toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 5px 8px; text-align: center; font-weight: bold; color: #1e3a8a;">${stepLabel}</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 5px 8px; text-align: center;">
+                            <span style="display: block; padding: 2px 4px; border-radius: 4px; background-color: ${estadoBg}; color: ${estadoColor}; font-weight: bold; font-size: 0.72rem;">${estadoLabel}</span>
+                        </td>
+                        <td style="border: 1px solid #cbd5e1; padding: 5px 8px; font-size: 0.72rem; color: #475569;">${r.observaciones || r.oficina || "-"}</td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                        </tbody>
+                    </table>
+
+                    <!-- Signature blocks -->
+                    <div style="display: flex; justify-content: space-around; margin-top: 50px; font-size: 0.8rem; text-align: center;">
+                        <div style="width: 250px;">
+                            <br><br>
+                            <div style="border-top: 1px solid #000; padding-top: 5px; font-weight: bold;">
+                                Residente de Obra
+                            </div>
+                            <div style="font-size: 0.7rem; color: #64748b;">Firma y Sello</div>
+                        </div>
+                        <div style="width: 250px;">
+                            <br><br>
+                            <div style="border-top: 1px solid #000; padding-top: 5px; font-weight: bold;">
+                                Supervisor / Inspector de Obra
+                            </div>
+                            <div style="font-size: 0.7rem; color: #64748b;">Firma y Sello</div>
+                        </div>
+                        <div style="width: 250px;">
+                            <br><br>
+                            <div style="border-top: 1px solid #000; padding-top: 5px; font-weight: bold;">
+                                Responsable de Abastecimiento / OASA
+                            </div>
+                            <div style="font-size: 0.7rem; color: #64748b;">Conformidad de Trámite</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            window.print();
+        }
+
         // PWA INSTALLATION INTERFACE
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
@@ -4134,5 +4298,6 @@
     
     <!-- PRINT CONTAINER (HIDDEN ON SCREEN, VISIBLE ON PRINT) -->
     <div id="printSummaryContainer" class="print-only"></div>
+    <div id="printAllSummaryContainer" class="print-only"></div>
 </body>
 </html>

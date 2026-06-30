@@ -88,9 +88,18 @@ Una vez publicada la web en GitHub Pages:
 
 ## 🖨️ Paso 5: Impresión de Reportes A4 Horizontal
 
+### A. Ficha Individual de Seguimiento:
 1. Abre el detalle de cualquier requerimiento presionando **"Ver"**.
-2. Haz clic en **"🖨 Imprimir A4"** en la parte inferior izquierda.
-3. En la ventana de tu navegador o celular:
+2. Haz clic en **"🖨 Imprimir A4"** en la parte inferior izquierda de la ventana.
+
+### B. Reporte Resumen General (De todos los requerimientos):
+1. En la pantalla principal del panel, haz clic en el botón **"🖨 Imprimir Resumen Gral."** (ubicado al lado del botón Reiniciar).
+2. El sistema ordenará y agrupará automáticamente todos tus requerimientos en el siguiente orden normativo:
+   * **Procesos Grandes (SEACE)** primero.
+   * **Menores a 8 UIT** en segundo lugar.
+   * **Perú Compras (Catálogo)** al final.
+3. Se generará una tabla compacta optimizada para **A4 Horizontal (Landscape)** con las firmas de control del Residente, Supervisor y Abastecimiento (OASA) listas para el comite y las reuniones de coordinación de obra.
+4. En las opciones de la impresora de tu navegador o celular:
    * Selecciona la orientación **Horizontal (Landscape)**.
-   * Asegúrate de marcar **"Imprimir gráficos de fondo"** (para conservar los colores verde/azul de la línea de tiempo).
-   * Elige **Guardar como PDF** si deseas compartir la ficha por WhatsApp en las reuniones semanales.
+   * Asegúrate de marcar **"Imprimir gráficos de fondo"** (para conservar los colores verde/azul de los estados).
+   * Elige **Guardar como PDF** si deseas compartir la ficha por WhatsApp.
