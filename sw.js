@@ -1,4 +1,4 @@
-const CACHE_NAME = 'req-tracker-cache-v23';
+const CACHE_NAME = 'req-tracker-cache-v24';
 const ASSETS = [
   './index.html',
   './GESTION_DE_REQ.html',
