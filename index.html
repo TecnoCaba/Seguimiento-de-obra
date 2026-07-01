@@ -1770,9 +1770,6 @@
             <div style="width: 18px; height: 18px; border: 3px solid #e2e8f0; border-top-color: #2563eb; border-radius: 50%; animation: spin 1s linear infinite; box-sizing: border-box;"></div>
             <span>Buscando actualizaciones...</span>
         </div>
-        <div style="position: absolute; bottom: 30px; font-size: 0.78rem; color: #94a3b8; font-weight: 600; letter-spacing: 0.5px;">
-            Versión 1.0.8
-        </div>
     </div>
 
     <!-- LOGIN SCREEN -->
@@ -1826,7 +1823,7 @@
             </button>
 
             <div style="text-align: center; margin-top: 25px; font-size: 0.78rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.5px;">
-                Versión 1.1.1
+                Versión 1.1.2
             </div>
         </div>
     </div>
@@ -1841,7 +1838,7 @@
                     <i data-lucide="git-pull-request" style="width: 22px; height: 22px;"></i>
                 </div>
                 <div class="brand-text">
-                    <h1>GESTIÓN DE REQUERIMIENTOS <span style="font-size: 0.72rem; font-weight: 700; color: var(--warning-dark); background-color: var(--warning-light); padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 8px; border: 1px solid rgba(245, 158, 11, 0.2); display: inline-block;">v1.1.1</span></h1>
+                    <h1>GESTIÓN DE REQUERIMIENTOS <span style="font-size: 0.72rem; font-weight: 700; color: var(--warning-dark); background-color: var(--warning-light); padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 8px; border: 1px solid rgba(245, 158, 11, 0.2); display: inline-block;">v1.1.2</span></h1>
                     <p>Obra: Mejoramiento de los Servicios de Educación Superior del ISTP Cabanillas</p>
                 </div>
             </div>
@@ -2853,7 +2850,7 @@
         }
 
         // RUN AND RE-COMPUTE STATS & LISTINGS
-        function runApp() {
+        function runApp(keepPage = false) {
             filteredRequirements = [...requirements];
             
             // Calculate stats
@@ -2878,11 +2875,11 @@
             document.getElementById('statMontoTotal').textContent = formatCurrency(montoTotal);
 
             // Apply searching and filtering
-            handleSearch();
+            handleSearch(keepPage);
         }
 
         // SEARCH AND FILTERS LOGIC
-        function handleSearch() {
+        function handleSearch(keepPage = false) {
             const term = document.getElementById('searchInput').value.trim().toLowerCase();
             const filterRuta = document.getElementById('filterRuta').value;
             const filterPriority = document.getElementById('filterPriority').value;
@@ -2918,7 +2915,14 @@
                 return matchTerm && matchRuta && matchPriority && matchPropietario && matchEstado && matchSeguimiento;
             });
 
-            currentPage = 1;
+            if (!keepPage) {
+                currentPage = 1;
+            } else {
+                const totalPages = Math.ceil(filteredRequirements.length / rowsPerPage) || 1;
+                if (currentPage > totalPages) {
+                    currentPage = totalPages;
+                }
+            }
             renderTable();
         }
 
@@ -3369,7 +3373,7 @@
             saveToLocalStorage();
             
             // Re-render
-            runApp();
+            runApp(true);
             populateFilters();
             
             // Re-render detail modal view with new values
@@ -3419,7 +3423,7 @@
                 requirements = requirements.filter(r => r.id !== activeRequirement.id);
                 saveToLocalStorage();
                 closeDetailModal();
-                runApp();
+                runApp(true);
             }
         }
 
@@ -3876,7 +3880,7 @@
             textInput.value = '';
             
             renderBitacoraComments();
-            runApp(); // Refresh stats/table
+            runApp(true); // Refresh stats/table
             
             // Update detail texts
             if (currentUser.role === 'residente') {
@@ -3940,7 +3944,7 @@
                 }
                 
                 renderBitacoraComments();
-                runApp();
+                runApp(true);
             }
         }
 
@@ -3964,7 +3968,7 @@
                 }
                 
                 renderBitacoraComments();
-                runApp();
+                runApp(true);
                 
                 // Refresh modal texts
                 document.getElementById('viewComentariosResidencia').textContent = activeRequirement["COMENTARIOS RESIDENCIA"] || 'Sin observaciones registradas por la residencia.';
